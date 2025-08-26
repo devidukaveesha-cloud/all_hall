@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <script src="https://cdn.tailwindcss.com"></script>
   
   <style>
     :root{
@@ -22,106 +21,84 @@
       margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
       color:var(--text);
       background:#000 url('wall.png') no-repeat center center fixed;
-      background-size:cover;
+      background-size: cover;
       display:flex; justify-content:center; align-items:center; min-height:100vh;
+      padding:20px;
     }
-    .auth-container{
-      background:var(--surface); padding:2rem; border-radius:var(--radius);
-      box-shadow:var(--shadow); width:90%; max-width:400px; text-align:center;
-      border:1px solid #2e2e2e;
-    }
-    .logo-container {
-      margin-bottom: 2rem;
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--accent);
-      text-align: center;
+    .register-container{
+      width:100%; max-width:400px;
+      padding:2rem;
+      background:rgba(23,23,23,0.9);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      text-align:center;
     }
     h1{
-      font-size:1.8rem; font-weight:800; margin-bottom:1.5rem; color:#fff;
+      font-size:2rem; font-weight:800; color:var(--accent); margin-bottom:1rem;
     }
     .input-group{
       text-align:left; margin-bottom:1rem;
     }
     .input-group label{
-      display:block; font-size:.875rem; color:var(--muted); margin-bottom:.5rem;
+      display:block; font-weight:600; margin-bottom:0.5rem;
     }
     .input-group input{
-      width:100%; padding:.75rem 1rem; border-radius:var(--radius); border:1px solid #3d3d3d;
-      background:var(--soft); color:var(--text);
-      transition:border-color .2s;
+      width:100%; padding:0.75rem; background:var(--soft); border:1px solid #333;
+      border-radius:var(--radius); color:var(--text);
     }
     .input-group input:focus{
       outline:none; border-color:var(--accent);
     }
     .submit-btn{
-      width:100%; padding:.75rem; border:none; border-radius:9999px; font-weight:600;
-      background:var(--accent); color:var(--bg); cursor:pointer;
-      transition:background-color .2s; margin-top:1rem;
+      width:100%; padding:0.75rem; border-radius:var(--radius);
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#111; font-weight:800; border:none; cursor:pointer;
+      transition:transform 0.2s, box-shadow 0.2s;
     }
     .submit-btn:hover{
-      background:var(--accent-2);
+      transform:translateY(-2px); box-shadow:0 5px 15px rgba(255,196,0,.4);
     }
     .social-login{
-      margin-top:1.5rem;
+      margin-top:1rem; border-top:1px solid #333; padding-top:1rem;
     }
     .social-btn{
-      width:100%; padding:.75rem; border-radius:9999px; border:1px solid #3d3d3d;
-      background:var(--soft); color:var(--text); cursor:pointer;
-      transition:background-color .2s;
+      width:100%; padding:0.75rem; border-radius:var(--radius);
+      background:var(--soft); color:var(--text); border:none; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      gap:0.5rem; transition:background-color 0.2s;
     }
     .social-btn:hover{
-      background:#2e2e2e;
+      background-color:#2e2e2e;
     }
     .social-btn i{
-      margin-right:.5rem;
-    }
-    .error-msg{
-      color:var(--danger); font-size:.875rem; text-align:center; margin-top:1rem;
-      opacity:0; transition:opacity .3s;
-    }
-    .error-msg.show{
-      opacity:1;
+      font-size:1.25rem;
     }
     .auth-footer{
-      font-size:.875rem; color:var(--muted); margin-top:1.5rem;
+      margin-top:1.5rem; font-size:0.875rem; color:var(--muted);
     }
     .auth-footer a{
-      color:var(--accent); font-weight:600;
+      color:var(--accent); text-decoration:underline;
     }
-    
-    /* Toast/Message Box */
-    #message-box {
-        position: fixed;
-        bottom: 24px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(30, 30, 30, 0.9);
-        color: #fff;
-        padding: 15px 30px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        text-align: center;
-        transition: opacity 0.5s ease-in-out;
-        opacity: 0;
+    .error-msg{
+      color:#ff5252; margin-top:1rem; text-align:center; font-size:0.875rem;
     }
   </style>
 </head>
-<body class="bg-gray-900 text-gray-100 font-inter">
-
-  <div class="auth-container">
-    <div class="logo-container">AllHall</div>
-    <h1>Create an Account</h1>
-    <div class="input-group">
-      <label for="reg-email">Email</label>
-      <input type="email" id="reg-email" placeholder="you@email.com">
-    </div>
-    <div class="input-group">
-      <label for="reg-pass">Password</label>
-      <input type="password" id="reg-pass" placeholder="••••••••">
-    </div>
-    <button id="btn-register" class="submit-btn">Register</button>
+<body>
+  
+  <div class="register-container">
+    <h1>Register</h1>
+    <form id="register-form">
+      <div class="input-group">
+        <label for="reg-email">Email</label>
+        <input type="email" id="reg-email" placeholder="you@email.com" required>
+      </div>
+      <div class="input-group">
+        <label for="reg-pass">Password</label>
+        <input type="password" id="reg-pass" placeholder="••••••••" required>
+      </div>
+      <button type="submit" id="btn-register" class="submit-btn">Register</button>
+    </form>
     <div class="social-login">
       <button id="btn-google-register" class="social-btn"><i class="fab fa-google"></i> Register with Google</button>
     </div>
@@ -131,9 +108,10 @@
     </div>
   </div>
 
-  <!-- A small message box to replace alerts -->
-  <div id="message-box" style="display:none;"></div>
-
-  <script type="module" src="app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"></script>
+  <script src="app.js" type="module"></script>
+  
 </body>
 </html>
