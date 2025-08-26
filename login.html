@@ -102,8 +102,6 @@
       padding: 15px;
       border-radius: var(--radius);
       margin-top: 20px;
-      border: none;
-      cursor: pointer;
     }
     .auth-footer {
       margin-top: 20px;
@@ -115,20 +113,9 @@
       font-weight: bold;
     }
     .error-msg {
-      color: red;
+      color: var(--danger);
       margin-top: 15px;
       text-align: left;
-    }
-    #message-box {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent);
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 8px;
-      display: none;
     }
   </style>
 </head>
@@ -154,13 +141,27 @@
     </div>
   </div>
 
-  <div id="message-box"></div>
+  <!-- A small message box to replace alerts -->
+  <div id="message-box" style="display:none;"></div>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
-  
-  <!-- Our logic file -->
   <script src="app.js"></script>
+  <script>
+    // Custom toast function to replace alert()
+    function toast(message, duration = 3000) {
+      const toastEl = document.getElementById('message-box');
+      if (toastEl) {
+        toastEl.textContent = message;
+        toastEl.style.display = 'block';
+        toastEl.style.opacity = '1';
+        setTimeout(() => {
+          toastEl.style.opacity = '0';
+          setTimeout(() => toastEl.style.display = 'none', 300);
+        }, duration);
+      }
+    }
+    // No specific JS needed for a static login form, Firebase logic is in app.js
+  </script>
 </body>
 </html>
