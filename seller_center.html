@@ -2,345 +2,105 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seller Center | All Hall</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts for "Inter" -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
-  <style>
-    /* Custom styles and overrides for a modern dashboard look */
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #0f0f0f url('wall.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #eaeaea;
-      display: flex;
-      min-height: 100vh;
-      margin: 0;
-    }
-    .sidebar {
-      width: 280px;
-      background: rgba(17, 17, 17, 0.9);
-      padding: 24px;
-      flex-shrink: 0;
-      display: none; /* Hide sidebar on mobile by default */
-    }
-    .main-content {
-      flex-grow: 1;
-      padding: 24px;
-    }
-    .card {
-      background: rgba(23, 23, 23, 0.8);
-      border: 1px solid #2e2e2e;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .sidebar-link {
-      display: flex;
-      align-items: center;
-      padding: 12px;
-      border-radius: 9999px;
-      margin-bottom: 8px;
-      transition: background-color 0.2s, color 0.2s;
-      cursor: pointer;
-    }
-    .sidebar-link:hover, .sidebar-link.active {
-      background-color: #ffc400;
-      color: #111;
-      font-weight: 600;
-    }
-    .sidebar-link i {
-      font-size: 1.25rem;
-      margin-right: 12px;
-    }
-    .sidebar-link span {
-      font-size: 1rem;
-    }
-    .main-content section {
-      display: none;
-    }
-    .main-content section.active {
-      display: block;
-    }
-    #message-box {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(30, 30, 30, 0.9);
-      color: #fff;
-      padding: 15px 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-      text-align: center;
-      transition: opacity 0.5s ease-in-out;
-      opacity: 0;
-    }
-    /* Responsive layout */
-    @media (min-width: 768px) {
-      .sidebar {
-        display: block;
-      }
-    }
-  </style>
-
+  <title>Seller Center</title>
+  <script type="module" src="app.js"></script>
 </head>
-<body class="bg-gray-900 text-gray-100 font-inter">
+<body>
+  <h1>Seller Center</h1>
 
-  <!-- Sidebar / Navigation -->
-  <aside class="sidebar">
-    <div class="text-3xl font-bold text-yellow-400 mb-8">Seller Center</div>
-    <nav>
-      <ul>
-        <li><a class="sidebar-link active" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
-        <li><a class="sidebar-link" onclick="showSection('products')"><i class="fas fa-box-open"></i> <span>My Products</span></a></li>
-        <li><a class="sidebar-link" onclick="showSection('orders')"><i class="fas fa-clipboard-list"></i> <span>Orders</span></a></li>
-        <li><a class="sidebar-link" onclick="showSection('analytics')"><i class="fas fa-chart-line"></i> <span>Analytics</span></a></li>
-      </ul>
-    </nav>
-  </aside>
+  <!-- Product Form -->
+  <form id="product-form">
+    <input type="text" id="prod-name" placeholder="Product Name" required><br>
+    <input type="number" id="prod-price" placeholder="Price" required><br>
+    <textarea id="prod-desc" placeholder="Description"></textarea><br>
+    <input type="file" id="prod-img" accept="image/*" required><br>
+    <button type="submit">Add Product</button>
+  </form>
 
-  <!-- Main Content Area -->
-  <main class="main-content">
-    
-    <!-- Dashboard Section -->
-    <section id="dashboard" class="active">
-      <h1 class="text-4xl font-bold text-yellow-400 mb-6">Dashboard</h1>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="card p-6 rounded-3xl shadow-xl text-center">
-          <p class="text-gray-400">Total Products</p>
-          <h2 class="text-5xl font-extrabold mt-2" id="total-products">0</h2>
-        </div>
-        <div class="card p-6 rounded-3xl shadow-xl text-center">
-          <p class="text-gray-400">Total Orders</p>
-          <h2 class="text-5xl font-extrabold mt-2" id="total-orders">0</h2>
-        </div>
-        <div class="card p-6 rounded-3xl shadow-xl text-center">
-          <p class="text-gray-400">Total Sales</p>
-          <h2 class="text-5xl font-extrabold mt-2" id="total-sales">$0</h2>
-        </div>
-        <div class="card p-6 rounded-3xl shadow-xl text-center">
-          <p class="text-gray-400">Pending Approvals</p>
-          <h2 class="text-5xl font-extrabold mt-2" id="pending-approvals">0</h2>
-        </div>
-      </div>
+  <div id="message-box"></div>
+  <hr>
+  <h2>My Products</h2>
+  <div id="product-list"></div>
 
-      <div class="mt-8">
-        <h2 class="text-3xl font-bold text-white mb-4">Create New Product</h2>
-        <div class="card p-6 rounded-3xl shadow-xl">
-          <form id="seller-form" class="space-y-4">
-            <div>
-              <label for="product-name" class="block text-gray-400 mb-2">Product Name</label>
-              <input type="text" id="product-name" placeholder="E.g., Leather Wallet" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-yellow-400">
-            </div>
-            <div>
-              <label for="product-price" class="block text-gray-400 mb-2">Price ($)</label>
-              <input type="number" id="product-price" placeholder="E.g., 29.99" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-yellow-400">
-            </div>
-            <div>
-              <label for="product-image" class="block text-gray-400 mb-2">Image URL</label>
-              <input type="url" id="product-image" placeholder="E.g., https://placehold.co/600x400" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-yellow-400">
-            </div>
-            <div>
-              <label for="product-description" class="block text-gray-400 mb-2">Description</label>
-              <textarea id="product-description" rows="4" placeholder="A brief description of the product..." class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-yellow-400"></textarea>
-            </div>
-            <button type="submit" class="w-full bg-yellow-400 text-gray-900 font-bold py-3 rounded-full transition-colors hover:bg-yellow-500">
-              Create Product
-            </button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- Products Section -->
-    <section id="products">
-      <h1 class="text-4xl font-bold text-yellow-400 mb-6">My Products</h1>
-      <div id="seller-products" class="space-y-4">
-        <!-- Products will be dynamically added here by app.js -->
-        <p class="text-gray-400 text-center">Loading products...</p>
-      </div>
-    </section>
-
-    <!-- Orders Section -->
-    <section id="orders">
-      <h1 class="text-4xl font-bold text-yellow-400 mb-6">Orders</h1>
-      <div class="card p-6 rounded-3xl shadow-xl">
-        <p class="text-gray-400 text-center">Incoming orders will be displayed here for fulfillment.</p>
-        <!-- Placeholder for orders list -->
-      </div>
-    </section>
-
-    <!-- Analytics Section -->
-    <section id="analytics">
-      <h1 class="text-4xl font-bold text-yellow-400 mb-6">Analytics</h1>
-      <div class="card p-6 rounded-3xl shadow-xl">
-        <p class="text-gray-400 text-center">Detailed sales and performance data will be shown here.</p>
-        <!-- Placeholder for charts and reports -->
-      </div>
-    </section>
-  </main>
-  
-  <!-- A small message box to replace alerts -->
-  <div id="message-box" style="display:none;"></div>
-
-  <!-- Import app.js with type="module" -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getFirestore, onSnapshot, collection, query, addDoc, serverTimestamp, deleteDoc, doc, updateDoc, getDocs, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-    import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    
-    // IMPORTANT: These variables are provided by the canvas environment.
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-    const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-    
-    // Initialize Firebase App
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-    let userId = null;
-    let isAuthReady = false;
+    import { auth, db, storage } from "./app.js";
+    import { collection, addDoc, query, where, getDocs } 
+      from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { ref, uploadBytes, getDownloadURL } 
+      from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+    import { onAuthStateChanged } 
+      from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            userId = user.uid;
-            isAuthReady = true;
-            initSeller();
-            hideSellerLinkBasedOnRole();
-        } else {
-            if (!isAuthReady) {
-                await signInAnonymously(auth);
-            }
-        }
+    const form = document.getElementById("product-form");
+    const productList = document.getElementById("product-list");
+
+    let currentUser = null;
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        currentUser = user;
+        loadProducts();
+      } else {
+        window.location.href = "login.html"; // not logged in
+      }
     });
 
-    const collections = {
-        products: `artifacts/${appId}/public/data/products`,
-    };
+    // Submit new product
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!currentUser) return;
 
-    function toast(message, duration = 3000) {
-        const toastEl = document.getElementById('message-box');
-        if (toastEl) {
-            toastEl.textContent = message;
-            toastEl.style.display = 'block';
-            setTimeout(() => {
-                toastEl.style.display = 'none';
-            }, duration);
-        }
-    }
-    
-    async function initSeller() {
-        const sellerForm = document.querySelector('#seller-form');
-        if (!sellerForm || !isAuthReady) {
-            return;
-        }
-        sellerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.querySelector('#product-name').value;
-            const price = parseFloat(document.querySelector('#product-price').value);
-            const img = document.querySelector('#product-image').value;
-            const desc = document.querySelector('#product-description').value;
+      const name = document.getElementById("prod-name").value;
+      const price = document.getElementById("prod-price").value;
+      const desc = document.getElementById("prod-desc").value;
+      const file = document.getElementById("prod-img").files[0];
 
-            if (!name || !price || !img || !desc) {
-                toast('Please fill in all fields.');
-                return;
-            }
+      if (!file) {
+        alert("Please select an image!");
+        return;
+      }
 
-            try {
-                const productRef = await addDoc(collection(db, collections.products), {
-                    name,
-                    price,
-                    img,
-                    desc,
-                    rating: 0,
-                    badges: ['NEW'],
-                    createdAt: serverTimestamp(),
-                });
-                console.log("New product added with ID:", productRef.id);
-                toast("Product created successfully!");
-                sellerForm.reset();
-            } catch (e) {
-                console.error("Error adding product: ", e);
-                toast("Error creating product. Please try again.");
-            }
+      try {
+        // 1. upload image to storage
+        const storageRef = ref(storage, "products/" + Date.now() + "_" + file.name);
+        await uploadBytes(storageRef, file);
+        const imageUrl = await getDownloadURL(storageRef);
+
+        // 2. save product data to Firestore
+        await addDoc(collection(db, "products"), {
+          sellerId: currentUser.uid,
+          name,
+          price: parseFloat(price),
+          desc,
+          imageUrl,
+          createdAt: new Date()
         });
 
-        const sellerProductsContainer = document.querySelector('#seller-products');
-        if (sellerProductsContainer) {
-            const q = query(collection(db, collections.products));
-            onSnapshot(q, (querySnapshot) => {
-                let products = [];
-                querySnapshot.forEach((doc) => {
-                    products.push({ id: doc.id, ...doc.data() });
-                });
-                if (products.length > 0) {
-                    sellerProductsContainer.innerHTML = products.map(p => `
-                        <div class="card p-4 rounded-xl shadow-lg flex justify-between items-center mb-4 bg-gray-800">
-                            <div class="flex items-center space-x-4">
-                                <img src="${p.img}" alt="${p.name}" class="w-16 h-16 object-cover rounded-lg">
-                                <div>
-                                    <h3 class="text-lg font-semibold">${p.name}</h3>
-                                    <p class="text-sm text-gray-400">$${p.price.toFixed(2)}</p>
-                                </div>
-                            </div>
-                            <div class="flex space-x-2">
-                                <button class="btn-edit-product bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition-colors" data-id="${p.id}">Edit</button>
-                                <button class="btn-delete-product bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full transition-colors" data-id="${p.id}">Delete</button>
-                            </div>
-                        </div>
-                    `).join('');
-                } else {
-                    sellerProductsContainer.innerHTML = '<p class="text-center text-gray-400">You have not created any products yet.</p>';
-                }
-            });
-        }
+        alert("Product added!");
+        form.reset();
+        loadProducts();
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    });
 
-        document.addEventListener('click', async (e) => {
-            if (e.target.classList.contains('btn-delete-product')) {
-                const productId = e.target.dataset.id;
-                try {
-                    await deleteDoc(doc(db, collections.products, productId));
-                    toast("Product deleted successfully!");
-                } catch (error) {
-                    console.error("Error removing product: ", error);
-                    toast("Error deleting product. Please try again.");
-                }
-            }
-        });
+    // Load seller's products
+    async function loadProducts() {
+      productList.innerHTML = "";
+      const q = query(collection(db, "products"), where("sellerId", "==", currentUser.uid));
+      const snap = await getDocs(q);
+      snap.forEach((doc) => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <h3>${data.name}</h3>
+          <p>${data.desc}</p>
+          <p>Price: ${data.price}</p>
+          <img src="${data.imageUrl}" width="150">
+        `;
+        productList.appendChild(div);
+      });
     }
-
-    function showSection(id) {
-        document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active'));
-        document.querySelectorAll('.main-content section').forEach(section => section.classList.remove('active'));
-        document.querySelector(`[onclick*='${id}']`).classList.add('active');
-        document.getElementById(id).classList.add('active');
-    }
-    
-    // Dummy function for hiding/showing the seller link, since we need it on every page.
-    async function hideSellerLinkBasedOnRole() {
-        const sellerLink = document.getElementById('seller-link');
-        const loginLink = document.getElementById('login-link');
-        const accountLink = document.getElementById('account-link');
-
-        if (sellerLink) {
-          sellerLink.style.display = 'flex';
-        }
-        if (loginLink) {
-            loginLink.style.display = 'none';
-        }
-        if (accountLink) {
-            accountLink.style.display = 'flex';
-        }
-    }
-
   </script>
 </body>
 </html>
