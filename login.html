@@ -1,153 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AllHall Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AllHall | Login / Register</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff9800, #ff5722);
-      margin: 0;
+    :root{
+      --bg:#0f0f0f; --surface:#171717; --soft:#1f1f1f;
+      --text:#eaeaea; --muted:#a1a1a1;
+      --accent:#ffc400; --accent-2:#ff9f00;
+      --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.35);
     }
-    .container {
-      background: rgba(0,0,0,0.8);
-      color: white;
-      padding: 30px;
-      border-radius: 15px;
-      width: 350px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      color:var(--text); background:#000 url('wall.png') center/cover fixed;
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      padding:24px;
     }
-    h2 {
-      text-align: center;
+    .card{
+      width:100%; max-width:900px; background:rgba(20,20,20,.84);
+      border:1px solid #262626; border-radius:18px; box-shadow:var(--shadow);
+      overflow:hidden; display:grid; grid-template-columns:1.2fr 1fr;
     }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 8px;
+    @media(max-width:900px){ .card{grid-template-columns:1fr} }
+    .left{
+      padding:28px; background:linear-gradient(180deg,rgba(255,196,0,.08),rgba(0,0,0,0));
     }
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 8px;
-      background: #ff9800;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
+    .right{ padding:28px; background:rgba(14,14,14,.9); border-left:1px solid #262626}
+    h1{margin:0 0 8px; font-weight:800}
+    .sub{color:var(--muted); margin:0 0 18px}
+    label{display:block; font-size:14px; color:#d7d7d7; margin:12px 0 6px}
+    input{
+      width:100%; background:#141414; border:1px solid #2a2a2a; color:#fff;
+      border-radius:12px; padding:12px 14px; outline:none;
     }
-    button:hover {
-      background: #ffc107;
+    input:focus{border-color:#3a3a3a; box-shadow:0 0 0 3px rgba(255,196,0,.14)}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media(max-width:520px){ .row{grid-template-columns:1fr} }
+    .btn{
+      width:100%; display:inline-flex; gap:10px; align-items:center; justify-content:center;
+      padding:12px 16px; border-radius:12px; border:0; cursor:pointer; font-weight:800;
     }
-    .google {
-      background: white;
-      color: black;
+    .btn.primary{ background:var(--accent); color:#000 }
+    .btn.ghost{ background:transparent; border:1px solid #2a2a2a; color:#fff }
+    .btn.google{ background:#fff; color:#111; }
+    .btn:disabled{opacity:.6; cursor:not-allowed}
+    .hr{
+      display:flex; align-items:center; gap:10px; color:#bfbfbf; margin:14px 0;
     }
-    .logout {
-      background: red;
-      color: white;
+    .hr::before,.hr::after{content:""; height:1px; flex:1; background:#2a2a2a}
+    .tabs{display:flex; gap:8px; margin-bottom:18px}
+    .tab{flex:1; padding:10px; border-radius:10px; text-align:center; cursor:pointer; font-weight:700}
+    .tab.active{ background:#222; border:1px solid #333 }
+    .muted{ color:var(--muted) }
+    .toast{ position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
+      background:#111; border:1px solid #2a2a2a; color:#fff; padding:12px 16px; border-radius:10px; display:none;
     }
+    a.link{color:var(--accent)}
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Welcome to AllHall</h2>
 
-    <!-- Register -->
-    <h3>Register</h3>
-    <input type="email" id="regEmail" placeholder="Email">
-    <input type="password" id="regPassword" placeholder="Password">
-    <button id="registerBtn">Create Account</button>
+  <div class="card">
+    <!-- LEFT: Login/Register -->
+    <section class="left">
+      <h1>Welcome to AllHall</h1>
+      <p class="sub">Login or create your account to continue.</p>
 
-    <!-- Login -->
-    <h3>Login</h3>
-    <input type="email" id="loginEmail" placeholder="Email">
-    <input type="password" id="loginPassword" placeholder="Password">
-    <button id="loginBtn">Login</button>
+      <div class="tabs">
+        <div id="tab-login" class="tab active"><i class="fa-solid fa-right-to-bracket"></i> Login</div>
+        <div id="tab-register" class="tab"><i class="fa-solid fa-user-plus"></i> Register</div>
+      </div>
 
-    <!-- Google Login -->
-    <button id="googleBtn" class="google">Sign in with Google</button>
+      <!-- LOGIN FORM -->
+      <form id="form-login">
+        <label>Email</label>
+        <input id="login-email" type="email" placeholder="you@email.com" required />
+        <label>Password</label>
+        <input id="login-pass" type="password" placeholder="••••••••" required />
+        <div style="margin-top:14px; display:grid; gap:10px">
+          <button class="btn primary" type="submit"><i class="fa-solid fa-unlock-keyhole"></i> Login</button>
+          <button id="btn-google-login" class="btn google" type="button">
+            <i class="fa-brands fa-google"></i> Continue with Google
+          </button>
+          <button id="btn-reset" class="btn ghost" type="button">
+            <i class="fa-solid fa-envelope"></i> Forgot password?
+          </button>
+        </div>
+      </form>
 
-    <!-- Logout -->
-    <button id="logoutBtn" class="logout">Logout</button>
+      <!-- REGISTER FORM -->
+      <form id="form-register" style="display:none">
+        <div class="row">
+          <div>
+            <label>First name</label>
+            <input id="reg-first" type="text" placeholder="John" required />
+          </div>
+          <div>
+            <label>Last name</label>
+            <input id="reg-last" type="text" placeholder="Doe" required />
+          </div>
+        </div>
+        <label>Email</label>
+        <input id="reg-email" type="email" placeholder="you@email.com" required />
+        <label>Password</label>
+        <input id="reg-pass" type="password" placeholder="At least 6 characters" minlength="6" required />
+
+        <div style="margin-top:14px; display:grid; gap:10px">
+          <button class="btn primary" type="submit"><i class="fa-solid fa-user-plus"></i> Create Account</button>
+          <button id="btn-google-register" class="btn google" type="button">
+            <i class="fa-brands fa-google"></i> Sign up with Google
+          </button>
+        </div>
+        <p class="muted" style="margin-top:12px">
+          By creating an account, you agree to our <a class="link" href="#">Terms</a>.
+        </p>
+      </form>
+    </section>
+
+    <!-- RIGHT: Info / Next actions -->
+    <section class="right">
+      <h2 style="margin:0 0 10px">Why create an account?</h2>
+      <ul class="muted">
+        <li>Track orders & returns easily</li>
+        <li>Save addresses and preferences</li>
+        <li>Faster checkout next time</li>
+      </ul>
+      <hr class="hr" />
+      <p class="muted">Already logged in? <a class="link" href="index.html">Go to Home</a></p>
+    </section>
   </div>
 
-  <!-- Firebase SDK -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Firebase SDKs (CDN, v10+) -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } 
-      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getAuth, onAuthStateChanged, signInWithEmailAndPassword,
+      createUserWithEmailAndPassword, sendPasswordResetEmail,
+      GoogleAuthProvider, signInWithPopup, updateProfile
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-    // ✅ Firebase Config
+    // 1) PASTE YOUR REAL CONFIG HERE
     const firebaseConfig = {
-      apiKey: "AIzaSyDKiQvra1lMhiqYL5ZLDAh2qMJRjTByHSA",
-      authDomain: "all-hall.firebaseapp.com",
-      projectId: "all-hall",
-      storageBucket: "all-hall.appspot.com",   // Corrected!
-      messagingSenderId: "141379512602",
-      appId: "1:141379512602:web:83f6f94655646893efa4a3",
-      measurementId: "G-QQPR0QJW4L"
-    };
+  apiKey: "AIzaSyDKiQvar1lMhiqYL5ZLDh2qMJRjTbyHSA",
+  authDomain: "all-hall.firebaseapp.com",
+  projectId: "all-hall",
+  storageBucket: "all-hall.appspot.com",
+  messagingSenderId: "141379512602",
+  appId: "1:141379512602:web:83f6f9465564693efa4a43",
+  measurementId: "G-QQPRQQJW4L"
+};
 
-    // Initialize Firebase
+
+    // 2) Init
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // Register
-    document.getElementById("registerBtn").addEventListener("click", () => {
-      const email = document.getElementById("regEmail").value;
-      const password = document.getElementById("regPassword").value;
+    // UI Helpers
+    const $ = (q)=>document.querySelector(q);
+    const toast = (msg, ms=2200)=>{
+      const t=$("#toast"); t.textContent=msg; t.style.display="block";
+      setTimeout(()=> t.style.display="none", ms);
+    };
 
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          alert("✅ Account Created: " + userCredential.user.email);
-        })
-        .catch((error) => {
-          alert("❌ " + error.message);
-        });
+    // Tabs
+    const tabLogin = $("#tab-login");
+    const tabReg   = $("#tab-register");
+    const formLogin = $("#form-login");
+    const formReg   = $("#form-register");
+
+    const showLogin = ()=>{ tabLogin.classList.add("active"); tabReg.classList.remove("active"); formLogin.style.display="block"; formReg.style.display="none"; };
+    const showReg   = ()=>{ tabReg.classList.add("active"); tabLogin.classList.remove("active"); formLogin.style.display="none"; formReg.style.display="block"; };
+
+    tabLogin.onclick = showLogin;
+    tabReg.onclick = showReg;
+
+    // Login (email/password)
+    formLogin.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const email = $("#login-email").value.trim();
+      const pass  = $("#login-pass").value;
+      try{
+        await signInWithEmailAndPassword(auth, email, pass);
+        toast("Logged in!");
+        // Redirect to your home after login
+        setTimeout(()=> location.href = "index.html", 700);
+      }catch(err){ toast(err.message); console.error(err); }
     });
 
-    // Login
-    document.getElementById("loginBtn").addEventListener("click", () => {
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
+    // Register (email/password)
+    formReg.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const first = $("#reg-first").value.trim();
+      const last  = $("#reg-last").value.trim();
+      const email = $("#reg-email").value.trim();
+      const pass  = $("#reg-pass").value;
 
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          alert("✅ Logged In as: " + userCredential.user.email);
-        })
-        .catch((error) => {
-          alert("❌ " + error.message);
-        });
+      try{
+        const cred = await createUserWithEmailAndPassword(auth, email, pass);
+        await updateProfile(cred.user, { displayName: `${first} ${last}` });
+        toast("Account created!");
+        setTimeout(()=> location.href = "index.html", 700);
+      }catch(err){ toast(err.message); console.error(err); }
     });
 
-    // Google Login
-    document.getElementById("googleBtn").addEventListener("click", () => {
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          const user = result.user;
-          alert("✅ Google Login Success! Welcome " + user.displayName);
-        })
-        .catch((error) => {
-          alert("❌ " + error.message);
-        });
-    });
+    // Google login/register (same flow)
+    const googleSignIn = async ()=>{
+      try{
+        await signInWithPopup(auth, provider);
+        toast("Signed in with Google");
+        setTimeout(()=> location.href = "index.html", 700);
+      }catch(err){ toast(err.message); console.error(err); }
+    };
+    $("#btn-google-login").onclick = googleSignIn;
+    $("#btn-google-register").onclick = googleSignIn;
 
-    // Logout
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      signOut(auth).then(() => {
-        alert("✅ Logged Out!");
-      }).catch((error) => {
-        alert("❌ " + error.message);
-      });
+    // Reset password
+    $("#btn-reset").onclick = async ()=>{
+      const email = $("#login-email").value.trim();
+      if(!email) return toast("Type your email above first");
+      try{
+        await sendPasswordResetEmail(auth, email);
+        toast("Reset link sent to your email");
+      }catch(err){ toast(err.message); }
+    };
+
+    // Observe auth state (handy while testing)
+    onAuthStateChanged(auth, (user)=>{
+      if(user){
+        console.log("AUTH →", user.uid, user.email, user.displayName);
+      }else{
+        console.log("AUTH → signed out");
+      }
     });
   </script>
 </body>
