@@ -1,229 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Hall | Home</title>
-
-  <!-- Existing stylesheet -->
-  <link rel="stylesheet" href="theme.css">
-
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AllHall | Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   
-  <!-- Tailwind CSS for utility classes -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Custom script file (deferred) -->
-  <script type="module" src="app.js"></script>
-
   <style>
-    /* Custom CSS for the slideshow to ensure proper positioning and aesthetics */
-    .slideshow-container {
-      max-width: 1000px; /* Adjust as needed */
-      position: relative;
-      margin: auto;
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-      font-family: 'Inter', system-ui, Segoe UI, Roboto, Arial;
+    :root{
+      --bg:#0f0f0f; --surface:#171717; --soft:#1f1f1f;
+      --text:#eaeaea; --muted:#a1a1a1;
+      --accent:#ffc400; --accent-2:#ff9f00;
+      --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.35);
     }
-
-    .mySlides {
-      display: none;
-      transition: opacity 0.6s ease-in-out;
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      color:var(--text);
+      background:#000 url('wall.png') no-repeat center center fixed;
+      background-size: cover;
+      display:flex; justify-content:center; align-items:center; min-height:100vh;
+      padding:20px;
     }
-
-    .mySlides img {
-      width: 100%;
-      height: 300px; /* Consistent height for all images */
-      object-fit: cover; /* Ensures images cover the area without distortion */
+    .login-container{
+      width:100%; max-width:400px;
+      padding:2rem;
+      background:rgba(23,23,23,0.9);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      text-align:center;
     }
-
-    /* Next & previous buttons */
-    .prev, .next {
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      width: auto;
-      padding: 16px;
-      margin-top: -22px;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-      transition: 0.6s ease;
-      border-radius: 0 3px 3px 0;
-      user-select: none;
-      background-color: rgba(0,0,0,0.4);
+    h1{
+      font-size:2rem; font-weight:800; color:var(--accent); margin-bottom:1rem;
     }
-    .next {
-      right: 0;
-      border-radius: 3px 0 0 3px;
+    .input-group{
+      text-align:left; margin-bottom:1rem;
     }
-    .prev:hover, .next:hover {
-      background-color: rgba(0,0,0,0.8);
+    .input-group label{
+      display:block; font-weight:600; margin-bottom:0.5rem;
     }
-
-    /* The dots/circles */
-    .dot {
-      cursor: pointer;
-      height: 15px;
-      width: 15px;
-      margin: 0 2px;
-      background-color: #bbb;
-      border-radius: 50%;
-      display: inline-block;
-      transition: background-color 0.6s ease;
+    .input-group input{
+      width:100%; padding:0.75rem; background:var(--soft); border:1px solid #333;
+      border-radius:var(--radius); color:var(--text);
     }
-
-    .active-dot, .dot:hover {
-      background-color: #717171;
+    .input-group input:focus{
+      outline:none; border-color:var(--accent);
     }
-
-    /* Fading animation */
-    .fade {
-      animation-name: fade;
-      animation-duration: 1.5s;
+    .submit-btn{
+      width:100%; padding:0.75rem; border-radius:var(--radius);
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#111; font-weight:800; border:none; cursor:pointer;
+      transition:transform 0.2s, box-shadow 0.2s;
     }
-
-    @keyframes fade {
-      from {opacity: .4} 
-      to {opacity: 1}
+    .submit-btn:hover{
+      transform:translateY(-2px); box-shadow:0 5px 15px rgba(255,196,0,.4);
+    }
+    .social-login{
+      margin-top:1rem; border-top:1px solid #333; padding-top:1rem;
+    }
+    .social-btn{
+      width:100%; padding:0.75rem; border-radius:var(--radius);
+      background:var(--soft); color:var(--text); border:none; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      gap:0.5rem; transition:background-color 0.2s;
+    }
+    .social-btn:hover{
+      background-color:#2e2e2e;
+    }
+    .social-btn i{
+      font-size:1.25rem;
+    }
+    .auth-footer{
+      margin-top:1.5rem; font-size:0.875rem; color:var(--muted);
+    }
+    .auth-footer a{
+      color:var(--accent); text-decoration:underline;
+    }
+    .error-msg{
+      color:#ff5252; margin-top:1rem; text-align:center; font-size:0.875rem;
     }
   </style>
-
 </head>
-<body class="bg-gray-900 text-gray-100 font-inter">
-
-  <!-- Main Header -->
-  <header class="main-header sticky top-0 z-50">
-    <div class="logo">
-      <a href="index.html">AllHall</a>
-    </div>
-    <div class="search-bar hidden sm:flex flex-grow max-w-lg mx-4">
-      <input type="text" placeholder="Search for products..." class="flex-grow p-2 rounded-l-full bg-gray-800 border border-gray-700 focus:outline-none focus:border-yellow-400">
-      <button class="bg-yellow-400 text-gray-900 p-2 rounded-r-full"><i class="fas fa-search"></i></button>
-    </div>
-    <div class="header-icons flex space-x-4">
-      <a href="cart.html" title="Cart"><i class="fas fa-shopping-cart"></i><span class="badge cart-count">0</span></a>
-      <a href="myorders.html" title="Orders" id="orders-link"><i class="fas fa-box"></i></a>
-      <a href="login.html" title="Login" id="login-link"><i class="fas fa-user"></i></a>
-      <a href="account.html" title="Account" class="hidden" id="account-link"><i class="fas fa-user"></i></a>
-    </div>
-  </header>
-
-  <main class="container mx-auto p-4 max-w-7xl">
-    
-    <!-- Slideshow container -->
-    <div class="slideshow-container">
-      <div class="mySlides fade">
-        <img src="https://placehold.co/1000x300/1e40af/ffffff?text=Great+Deals" alt="Slide 1">
+<body>
+  
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="login-form">
+      <div class="input-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="you@email.com" required>
       </div>
-      <div class="mySlides fade">
-        <img src="https://placehold.co/1000x300/4d7c0f/ffffff?text=New+Arrivals" alt="Slide 2">
+      <div class="input-group">
+        <label for="login-pass">Password</label>
+        <input type="password" id="login-pass" placeholder="••••••••" required>
       </div>
-      <div class="mySlides fade">
-        <img src="https://placehold.co/1000x300/8b5cf6/ffffff?text=Clearance+Sale" alt="Slide 3">
-      </div>
-      <!-- Next and previous buttons -->
-      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      <button type="submit" class="submit-btn">Login</button>
+    </form>
+    <div class="social-login">
+      <button id="btn-google-login" class="social-btn"><i class="fab fa-google"></i> Login with Google</button>
     </div>
-    <br>
-    <!-- The dots/circles -->
-    <div style="text-align:center">
-      <span class="dot" onclick="currentSlide(1)"></span> 
-      <span class="dot" onclick="currentSlide(2)"></span> 
-      <span class="dot" onclick="currentSlide(3)"></span> 
+    <p id="login-error-msg" class="error-msg"></p>
+    <div class="auth-footer">
+      Don’t have an account? <a href="register.html">Register here</a>
     </div>
+  </div>
 
-    <!-- Featured Products Section -->
-    <section class="mt-8">
-      <h2 class="text-3xl font-bold mb-6 text-center text-yellow-400">Featured Products</h2>
-      <div class="product-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Products will be dynamically added here by app.js -->
-      </div>
-    </section>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"></script>
 
-  </main>
-
-  <!-- Footer -->
-  <footer class="text-center p-4 mt-8 bg-gray-800 text-gray-500">
-    <p>&copy; 2024 AllHall. All rights reserved.</p>
-    <p id="user-id-display" class="text-xs mt-2"></p>
-  </footer>
-
-  <!-- Bottom Navigation Bar -->
-  <nav class="main-nav flex justify-around items-center p-3 text-sm sm:text-base sticky bottom-0 z-10 w-full rounded-t-3xl shadow-[0_-4px_12px_rgba(0,0,0,0.2)]">
-    <a href="index.html" class="flex flex-col items-center text-[#ffc400] p-2 rounded-lg">
-      <i class="fas fa-home text-xl"></i>
-      <span class="mt-1 text-xs sm:text-sm">Home</span>
-    </a>
-    <a href="cart.html" class="flex flex-col items-center text-gray-400 hover:text-[#ffc400] transition-colors p-2 rounded-lg">
-      <i class="fas fa-shopping-cart text-xl"></i>
-      <span class="mt-1 text-xs sm:text-sm">Cart</span>
-    </a>
-    <a href="myorders.html" class="flex flex-col items-center text-gray-400 hover:text-[#ffc400] transition-colors p-2 rounded-lg" id="myorders-link">
-      <i class="fas fa-box text-xl"></i>
-      <span class="mt-1 text-xs sm:text-sm">Orders</span>
-    </a>
-    <a href="seller_center.html" id="seller-link" class="flex flex-col items-center text-gray-400 hover:text-[#ffc400] transition-colors p-2 rounded-lg">
-      <i class="fas fa-store text-xl"></i>
-      <span class="mt-1 text-xs sm:text-sm">Seller</span>
-    </a>
-    <a href="account.html" class="flex flex-col items-center text-gray-400 hover:text-[#ffc400] transition-colors p-2 rounded-lg" id="account-link">
-      <i class="fas fa-user text-xl"></i>
-      <span class="mt-1 text-xs sm:text-sm">Account</span>
-    </a>
-  </nav>
-
-  <script>
-    let slideIndex = 1;
-    let autoSlideTimer;
-
-    // Show the initial slide and start the auto-play timer
-    window.onload = function() {
-      showSlides(slideIndex);
-      startAutoSlide();
-    };
-
-    // Controls for Next/Previous buttons
-    function plusSlides(n) {
-      clearTimeout(autoSlideTimer);
-      showSlides(slideIndex += n);
-      startAutoSlide();
-    }
-
-    // Controls for Dot navigation
-    function currentSlide(n) {
-      clearTimeout(autoSlideTimer);
-      showSlides(slideIndex = n);
-      startAutoSlide();
-    }
-
-    // Main function to display the slides
-    function showSlides(n) {
-      let i;
-      let slides = document.getElementsByClassName("mySlides");
-      let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) {slideIndex = 1}    
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-      }
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active-dot", "");
-      }
-      slides[slideIndex-1].style.display = "block";  
-      dots[slideIndex-1].className += " active-dot";
-    }
-
-    // Auto-play the slideshow
-    function startAutoSlide() {
-      autoSlideTimer = setTimeout(() => {
-        plusSlides(1);
-      }, 5000); // Change slide every 5 seconds
-    }
-  </script>
+  <!-- Your app.js backend -->
+  <script type="module" src="app.js"></script>
 </body>
 </html>
