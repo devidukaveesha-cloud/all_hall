@@ -1,117 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AllHall | Register</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  
-  <style>
-    :root{
-      --bg:#0f0f0f; --surface:#171717; --soft:#1f1f1f;
-      --text:#eaeaea; --muted:#a1a1a1;
-      --accent:#ffc400; --accent-2:#ff9f00;
-      --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.35);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
-      color:var(--text);
-      background:#000 url('wall.png') no-repeat center center fixed;
-      background-size: cover;
-      display:flex; justify-content:center; align-items:center; min-height:100vh;
-      padding:20px;
-    }
-    .register-container{
-      width:100%; max-width:400px;
-      padding:2rem;
-      background:rgba(23,23,23,0.9);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      text-align:center;
-    }
-    h1{
-      font-size:2rem; font-weight:800; color:var(--accent); margin-bottom:1rem;
-    }
-    .input-group{
-      text-align:left; margin-bottom:1rem;
-    }
-    .input-group label{
-      display:block; font-weight:600; margin-bottom:0.5rem;
-    }
-    .input-group input{
-      width:100%; padding:0.75rem; background:var(--soft); border:1px solid #333;
-      border-radius:var(--radius); color:var(--text);
-    }
-    .input-group input:focus{
-      outline:none; border-color:var(--accent);
-    }
-    .submit-btn{
-      width:100%; padding:0.75rem; border-radius:var(--radius);
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      color:#111; font-weight:800; border:none; cursor:pointer;
-      transition:transform 0.2s, box-shadow 0.2s;
-    }
-    .submit-btn:hover{
-      transform:translateY(-2px); box-shadow:0 5px 15px rgba(255,196,0,.4);
-    }
-    .social-login{
-      margin-top:1rem; border-top:1px solid #333; padding-top:1rem;
-    }
-    .social-btn{
-      width:100%; padding:0.75rem; border-radius:var(--radius);
-      background:var(--soft); color:var(--text); border:none; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      gap:0.5rem; transition:background-color 0.2s;
-    }
-    .social-btn:hover{
-      background-color:#2e2e2e;
-    }
-    .social-btn i{
-      font-size:1.25rem;
-    }
-    .auth-footer{
-      margin-top:1.5rem; font-size:0.875rem; color:var(--muted);
-    }
-    .auth-footer a{
-      color:var(--accent); text-decoration:underline;
-    }
-    .error-msg{
-      color:#ff5252; margin-top:1rem; text-align:center; font-size:0.875rem;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | All Hall</title>
+  <link rel="stylesheet" href="theme.css">
 </head>
 <body>
-  
-  <div class="register-container">
-    <h1>Register</h1>
-    <form id="register-form">
-      <div class="input-group">
-        <label for="reg-email">Email</label>
-        <input type="email" id="reg-email" placeholder="you@email.com" required>
-      </div>
-      <div class="input-group">
-        <label for="reg-pass">Password</label>
-        <input type="password" id="reg-pass" placeholder="••••••••" required>
-      </div>
-      <button type="submit" id="btn-register" class="submit-btn">Register</button>
-    </form>
-    <div class="social-login">
-      <button id="btn-google-register" class="social-btn"><i class="fab fa-google"></i> Register with Google</button>
-    </div>
-    <p id="register-error-msg" class="error-msg"></p>
-    <div class="auth-footer">
-      Already have an account? <a href="login.html">Login here</a>
-    </div>
-  </div>
+  <header class="main-header">
+    <div class="logo"><a href="index.html">MyShop</a></div>
+  </header>
 
-  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"></script>
-  <script src="app.js" type="module"></script>
-  
+  <main class="container">
+    <h1>Register</h1>
+    <form id="register-form" class="card">
+      <input type="email" id="reg-email" placeholder="Email" required>
+      <input type="password" id="reg-pass" placeholder="Password" required>
+      <button type="submit" class="btn">Register</button>
+    </form>
+
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+  </main>
+
+  <script type="module" src="app.js"></script>
 </body>
 </html>
