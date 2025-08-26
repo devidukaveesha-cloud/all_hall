@@ -154,65 +154,13 @@
     </div>
   </div>
 
-  <!-- A small message box to replace alerts -->
   <div id="message-box"></div>
 
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
-  <script>
-    // ==== Firebase Config (ඔයාගේ Firebase Console එකෙන් ගන්න) ====
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-
-    // Firebase initialize
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    // Custom toast
-    function toast(message, duration = 3000) {
-      const toastEl = document.getElementById('message-box');
-      toastEl.textContent = message;
-      toastEl.style.display = 'block';
-      toastEl.style.opacity = '1';
-      setTimeout(() => {
-        toastEl.style.opacity = '0';
-        setTimeout(() => toastEl.style.display = 'none', 300);
-      }, duration);
-    }
-
-    // Email/Password login
-    document.getElementById("btn-login").addEventListener("click", () => {
-      const email = document.getElementById("login-email").value;
-      const password = document.getElementById("login-pass").value;
-
-      auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
-          toast("Login Successful!");
-          window.location.href = "seller_center.html"; 
-        })
-        .catch(error => {
-          document.getElementById("login-error-msg").textContent = error.message;
-        });
-    });
-
-    // Google login
-    document.getElementById("btn-google-login").addEventListener("click", () => {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider)
-        .then(() => {
-          toast("Google Login Successful!");
-          window.location.href = "seller_center.html"; 
-        })
-        .catch(error => {
-          document.getElementById("login-error-msg").textContent = error.message;
-        });
-    });
-  </script>
+  
+  <!-- Our logic file -->
+  <script src="app.js"></script>
 </body>
 </html>
