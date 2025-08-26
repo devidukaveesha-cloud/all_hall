@@ -22,15 +22,24 @@ import {
   addDoc,
   getDocs,
   updateDoc,
-  deleteDoc
+  deleteDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+// ✅ Storage imports
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
 // ================= Firebase Config =================
 const firebaseConfig = {
   apiKey: "AIzaSyDKiQvra1lMhiqYL5ZLDAh2qMJRjTByHSA",
   authDomain: "all-hall.firebaseapp.com",
   projectId: "all-hall",
-  storageBucket: "all-hall.firebasestorage.app",
+  storageBucket: "all-hall.appspot.com", // ⚠️ fix: use .appspot.com
   messagingSenderId: "141379512602",
   appId: "1:141379512602:web:83f6f94655646893efa4a3",
   measurementId: "G-QQPR0QJW4L"
@@ -41,12 +50,12 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app); // ✅ Storage init
 
 // ================= Helpers =================
 let currentUser = null;
 let userRole = "user";
 
-// Show message box (like a toast)
 function showMessage(msg) {
   let box = document.getElementById("message-box");
   if (!box) {
@@ -70,7 +79,6 @@ if (registerForm) {
     const pass = document.getElementById("reg-pass").value;
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, pass);
-      // Save default role in Firestore
       await setDoc(doc(db, "roles", cred.user.uid), {
         role: "user",
         email: email,
@@ -90,7 +98,6 @@ if (googleBtn) {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      // Save default role if not exists
       const roleRef = doc(db, "roles", result.user.uid);
       const roleSnap = await getDoc(roleRef);
       if (!roleSnap.exists()) {
@@ -137,7 +144,6 @@ if (logoutBtn) {
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     currentUser = user;
-    // Get role
     const roleDoc = await getDoc(doc(db, "roles", user.uid));
     if (roleDoc.exists()) {
       userRole = roleDoc.data().role;
@@ -185,4 +191,4 @@ async function removeFromCart(cartItemId) {
 }
 
 // ================= Export =================
-export { auth, db, addToCart, loadCart, removeFromCart };
+export { auth, db, storage, addToCart, loadCart, removeFromCart };
