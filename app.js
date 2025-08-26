@@ -1,194 +1,84 @@
-/* ===== app.js ===== */
+// Import Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  GoogleAuthProvider, 
+  signInWithPopup 
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-// ================= Firebase Imports =================
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-  collection,
-  addDoc,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-// ✅ Storage imports
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
-
-// ================= Firebase Config =================
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDKiQvra1lMhiqYL5ZLDAh2qMJRjTByHSA",
   authDomain: "all-hall.firebaseapp.com",
   projectId: "all-hall",
-  storageBucket: "all-hall.appspot.com", // ⚠️ fix: use .appspot.com
+  storageBucket: "all-hall.appspot.com",
   messagingSenderId: "141379512602",
   appId: "1:141379512602:web:83f6f94655646893efa4a3",
   measurementId: "G-QQPR0QJW4L"
 };
 
-// ================= Init =================
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app); // ✅ Storage init
 
-// ================= Helpers =================
-let currentUser = null;
-let userRole = "user";
+// Selectors
+const emailInput = document.getElementById("login-email");
+const passInput = document.getElementById("login-pass");
+const loginBtn = document.getElementById("btn-login");
+const googleBtn = document.getElementById("btn-google-login");
+const errorMsg = document.getElementById("login-error-msg");
 
-function showMessage(msg) {
-  let box = document.getElementById("message-box");
-  if (!box) {
-    box = document.createElement("div");
-    box.id = "message-box";
-    document.body.appendChild(box);
+// Custom toast
+function toast(message, duration = 3000) {
+  const toastEl = document.getElementById('message-box');
+  if (toastEl) {
+    toastEl.textContent = message;
+    toastEl.style.display = 'block';
+    toastEl.style.opacity = '1';
+    setTimeout(() => {
+      toastEl.style.opacity = '0';
+      setTimeout(() => toastEl.style.display = 'none', 300);
+    }, duration);
   }
-  box.innerText = msg;
-  box.style.opacity = 1;
-  setTimeout(() => (box.style.opacity = 0), 3000);
 }
 
-// ================= Auth =================
+// 🔹 Email/Password Login
+loginBtn.addEventListener("click", async () => {
+  const email = emailInput.value.trim();
+  const pass = passInput.value.trim();
 
-// Register
-const registerForm = document.getElementById("register-form");
-if (registerForm) {
-  registerForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = document.getElementById("reg-email").value;
-    const pass = document.getElementById("reg-pass").value;
-    try {
-      const cred = await createUserWithEmailAndPassword(auth, email, pass);
-      await setDoc(doc(db, "roles", cred.user.uid), {
-        role: "user",
-        email: email,
-      });
-      showMessage("Registered successfully!");
-      window.location.href = "index.html";
-    } catch (err) {
-      showMessage("Error: " + err.message);
-    }
-  });
-}
+  if (!email || !pass) {
+    errorMsg.textContent = "Please enter email and password.";
+    return;
+  }
 
-// Google Register/Login
-const googleBtn = document.getElementById("btn-google-register") || document.getElementById("btn-google-login");
-if (googleBtn) {
-  googleBtn.addEventListener("click", async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const roleRef = doc(db, "roles", result.user.uid);
-      const roleSnap = await getDoc(roleRef);
-      if (!roleSnap.exists()) {
-        await setDoc(roleRef, {
-          role: "user",
-          email: result.user.email,
-        });
-      }
-      showMessage("Logged in with Google!");
-      window.location.href = "index.html";
-    } catch (err) {
-      showMessage("Google Login Failed: " + err.message);
-    }
-  });
-}
+  try {
+    const userCred = await signInWithEmailAndPassword(auth, email, pass);
+    toast("✅ Login successful!");
+    console.log("User:", userCred.user);
 
-// Login
-const loginForm = document.getElementById("login-form");
-if (loginForm) {
-  loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = document.getElementById("login-email").value;
-    const pass = document.getElementById("login-pass").value;
-    try {
-      await signInWithEmailAndPassword(auth, email, pass);
-      showMessage("Login successful!");
-      window.location.href = "index.html";
-    } catch (err) {
-      showMessage("Login Failed: " + err.message);
-    }
-  });
-}
+    // Redirect based on role later
+    window.location.href = "seller_center.html";  
 
-// Logout
-const logoutBtn = document.getElementById("btn-logout");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", async () => {
-    await signOut(auth);
-    window.location.href = "login.html";
-  });
-}
-
-// ================= Roles & State =================
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    currentUser = user;
-    const roleDoc = await getDoc(doc(db, "roles", user.uid));
-    if (roleDoc.exists()) {
-      userRole = roleDoc.data().role;
-    } else {
-      userRole = "user";
-    }
-    console.log("Logged in as:", user.email, "Role:", userRole);
-  } else {
-    currentUser = null;
-    userRole = "user";
-    console.log("Not logged in");
+  } catch (error) {
+    console.error(error);
+    errorMsg.textContent = error.message;
   }
 });
 
-// ================= Cart =================
-async function addToCart(productId, productData) {
-  if (!currentUser) {
-    showMessage("Please log in first!");
-    return;
+// 🔹 Google Login
+googleBtn.addEventListener("click", async () => {
+  const provider = new GoogleAuthProvider();
+  try {
+    const result = await signInWithPopup(auth, provider);
+    toast("✅ Google login successful!");
+    console.log("Google User:", result.user);
+
+    window.location.href = "seller_center.html";
+
+  } catch (error) {
+    console.error(error);
+    errorMsg.textContent = error.message;
   }
-  await setDoc(doc(db, "carts", currentUser.uid + "_" + productId), {
-    userId: currentUser.uid,
-    productId,
-    ...productData,
-  });
-  showMessage("Added to cart!");
-}
-
-async function loadCart() {
-  if (!currentUser) return [];
-  const qSnap = await getDocs(collection(db, "carts"));
-  let items = [];
-  qSnap.forEach((docSnap) => {
-    const data = docSnap.data();
-    if (data.userId === currentUser.uid) {
-      items.push({ id: docSnap.id, ...data });
-    }
-  });
-  return items;
-}
-
-async function removeFromCart(cartItemId) {
-  await deleteDoc(doc(db, "carts", cartItemId));
-  showMessage("Item removed!");
-}
-
-// ================= Export =================
-export { auth, db, storage, addToCart, loadCart, removeFromCart };
+});
