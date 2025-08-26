@@ -102,6 +102,8 @@
       padding: 15px;
       border-radius: var(--radius);
       margin-top: 20px;
+      border: none;
+      cursor: pointer;
     }
     .auth-footer {
       margin-top: 20px;
@@ -113,9 +115,20 @@
       font-weight: bold;
     }
     .error-msg {
-      color: var(--danger);
+      color: red;
       margin-top: 15px;
       text-align: left;
+    }
+    #message-box {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      display: none;
     }
   </style>
 </head>
@@ -142,26 +155,64 @@
   </div>
 
   <!-- A small message box to replace alerts -->
-  <div id="message-box" style="display:none;"></div>
+  <div id="message-box"></div>
 
   <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
-  <script src="app.js"></script>
   <script>
-    // Custom toast function to replace alert()
+    // ==== Firebase Config (ඔයාගේ Firebase Console එකෙන් ගන්න) ====
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Firebase initialize
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Custom toast
     function toast(message, duration = 3000) {
       const toastEl = document.getElementById('message-box');
-      if (toastEl) {
-        toastEl.textContent = message;
-        toastEl.style.display = 'block';
-        toastEl.style.opacity = '1';
-        setTimeout(() => {
-          toastEl.style.opacity = '0';
-          setTimeout(() => toastEl.style.display = 'none', 300);
-        }, duration);
-      }
+      toastEl.textContent = message;
+      toastEl.style.display = 'block';
+      toastEl.style.opacity = '1';
+      setTimeout(() => {
+        toastEl.style.opacity = '0';
+        setTimeout(() => toastEl.style.display = 'none', 300);
+      }, duration);
     }
-    // No specific JS needed for a static login form, Firebase logic is in app.js
+
+    // Email/Password login
+    document.getElementById("btn-login").addEventListener("click", () => {
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-pass").value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          toast("Login Successful!");
+          window.location.href = "seller_center.html"; 
+        })
+        .catch(error => {
+          document.getElementById("login-error-msg").textContent = error.message;
+        });
+    });
+
+    // Google login
+    document.getElementById("btn-google-login").addEventListener("click", () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(() => {
+          toast("Google Login Successful!");
+          window.location.href = "seller_center.html"; 
+        })
+        .catch(error => {
+          document.getElementById("login-error-msg").textContent = error.message;
+        });
+    });
   </script>
 </body>
 </html>
