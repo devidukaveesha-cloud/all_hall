@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | All Hall</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+  <header class="main-header">
+    <div class="logo">
+      <a href="index.html">MyShop</a>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search products...">
+      <button><i class="fas fa-search"></i></button>
+    </div>
+    <div class="header-icons">
+      <a href="cart.html" title="Cart"><i class="fas fa-shopping-cart"></i><span class="badge cart-count">0</span></a>
+      <a href="myorders.html" title="Orders"><i class="fas fa-box"></i></a>
+      <a href="login.html" title="Login"><i class="fas fa-user"></i></a>
+    </div>
+  </header>
+
+  <main class="checkout-page">
+    <h1>Checkout</h1>
+
+    <div class="checkout-cards">
+      <div class="checkout-card">
+        <h2>Shipping Information</h2>
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <input type="text" placeholder="Street Address" required>
+        <input type="text" placeholder="City" required>
+        <input type="text" placeholder="Postal Code" required>
+        <input type="text" placeholder="Phone Number">
+      </div>
+
+      <div class="checkout-card">
+        <h2>Order Summary</h2>
+        <div class="summary-item"><span>Awesome Product</span><span>$49.99</span></div>
+        <div class="summary-item"><span>Shipping</span><span>$5.00</span></div>
+        <div class="summary-total"><strong>Total</strong><strong>$54.99</strong></div>
+        <button class="btn buy-now">Place Order</button>
+      </div>
+    </div>
+  </main>
+
+  <nav class="main-nav">
+    <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="cart.html"><i class="fas fa-shopping-cart"></i><span>Cart</span></a>
+    <a href="myorders.html"><i class="fas fa-box"></i><span>Orders</span></a>
+    <a href="seller_center.html"><i class="fas fa-store"></i><span>Seller</span></a>
+    <a href="login.html"><i class="fas fa-user"></i><span>Login</span></a>
+  </nav>
+
+  <div id="message-box" class="message-box"></div>
+  
+  <script src="app.js"></script>
+</body>
+</html>

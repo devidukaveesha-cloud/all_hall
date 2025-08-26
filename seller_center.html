@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Center | All Hall</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts for "Inter" -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Custom styles and overrides for a modern dashboard look */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f0f0f url('wall.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #eaeaea;
+      display: flex;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .sidebar {
+      width: 280px;
+      background: rgba(17, 17, 17, 0.9);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 24px;
+      position: fixed;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar a {
+      color: #a1a1a1;
+      transition: all 0.2s;
+    }
+    .sidebar a.active, .sidebar a:hover {
+      background-color: rgba(255, 196, 0, 0.1);
+      color: #ffc400;
+    }
+    .main-content {
+      flex: 1;
+      margin-left: 280px; /* Offset for the fixed sidebar */
+      padding: 32px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .main-content section {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .main-content section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card {
+      background: rgba(23, 23, 23, 0.8);
+      backdrop-filter: blur(8px);
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      background: #333;
+      border: 1px solid #444;
+      color: #eaeaea;
+      padding: 12px;
+      border-radius: 8px;
+    }
+    .btn {
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar / Navigation -->
+  <aside class="sidebar flex flex-col items-start space-y-2">
+    <h2 class="text-3xl font-bold text-[#ffc400] mb-6">Seller Center</h2>
+    <a href="#" onclick="showSection('dashboard')" class="flex items-center w-full p-3 rounded-xl space-x-3 active">
+      <i class="fas fa-chart-line text-lg"></i>
+      <span class="font-semibold">Dashboard</span>
+    </a>
+    <a href="#" onclick="showSection('addProduct')" class="flex items-center w-full p-3 rounded-xl space-x-3">
+      <i class="fas fa-plus-circle text-lg"></i>
+      <span class="font-semibold">Add Product</span>
+    </a>
+    <a href="#" onclick="showSection('myProducts')" class="flex items-center w-full p-3 rounded-xl space-x-3">
+      <i class="fas fa-boxes text-lg"></i>
+      <span class="font-semibold">My Products</span>
+    </a>
+    <a href="#" onclick="showSection('orders')" class="flex items-center w-full p-3 rounded-xl space-x-3">
+      <i class="fas fa-truck text-lg"></i>
+      <span class="font-semibold">Orders</span>
+    </a>
+    <a href="#" onclick="showSection('analytics')" class="flex items-center w-full p-3 rounded-xl space-x-3">
+      <i class="fas fa-chart-bar text-lg"></i>
+      <span class="font-semibold">Analytics</span>
+    </a>
+    <a href="index.html" class="flex items-center w-full p-3 rounded-xl space-x-3 mt-auto">
+      <i class="fas fa-sign-out-alt text-lg"></i>
+      <span class="font-semibold">Back to Store</span>
+    </a>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="active">
+      <h1 class="text-4xl font-bold text-white mb-6">Dashboard</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card p-6 rounded-3xl shadow-xl">
+          <h3 class="text-lg font-bold text-[#ffc400]">Total Sales</h3>
+          <p class="text-4xl font-extrabold mt-2">$2,548</p>
+          <p class="text-sm text-gray-400 mt-1">Last 30 days</p>
+        </div>
+        <div class="card p-6 rounded-3xl shadow-xl">
+          <h3 class="text-lg font-bold text-[#ffc400]">Products Sold</h3>
+          <p class="text-4xl font-extrabold mt-2">124</p>
+          <p class="text-sm text-gray-400 mt-1">Last 30 days</p>
+        </div>
+        <div class="card p-6 rounded-3xl shadow-xl">
+          <h3 class="text-lg font-bold text-[#ffc400]">Pending Orders</h3>
+          <p class="text-4xl font-extrabold mt-2">8</p>
+          <p class="text-sm text-gray-400 mt-1">Awaiting fulfillment</p>
+        </div>
+        <div class="card p-6 rounded-3xl shadow-xl">
+          <h3 class="text-lg font-bold text-[#ffc400]">Product Views</h3>
+          <p class="text-4xl font-extrabold mt-2">4,120</p>
+          <p class="text-sm text-gray-400 mt-1">Last 30 days</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add Product Section -->
+    <section id="addProduct">
+      <h1 class="text-4xl font-bold text-white mb-6">Add New Product</h1>
+      <div class="card p-8 rounded-3xl shadow-xl">
+        <form id="productForm" class="space-y-4">
+          <div class="form-group">
+            <label for="pname" class="block mb-2 font-medium">Product Name</label>
+            <input type="text" id="pname" name="name" class="w-full" required>
+          </div>
+          <div class="form-group">
+            <label for="pprice" class="block mb-2 font-medium">Price ($)</label>
+            <input type="number" id="pprice" name="price" class="w-full" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="pimage" class="block mb-2 font-medium">Product Image URL</label>
+            <input type="url" id="pimage" name="img" class="w-full">
+          </div>
+          <div class="form-group">
+            <label for="pdesc" class="block mb-2 font-medium">Description</label>
+            <textarea id="pdesc" name="desc" rows="4" class="w-full"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pcategory" class="block mb-2 font-medium">Category</label>
+            <input type="text" id="pcategory" name="category" class="w-full">
+          </div>
+          <button type="submit" class="btn w-full bg-[#ffc400] text-black font-bold py-3 rounded-full mt-6 hover:bg-[#ff9f00]">Publish Product</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- My Products Section -->
+    <section id="myProducts">
+      <h1 class="text-4xl font-bold text-white mb-6">My Products</h1>
+      <div class="card p-6 rounded-3xl shadow-xl">
+        <p class="text-gray-400 text-center">Your product listings will appear here. You can manage them with edit and delete options.</p>
+        <!-- Placeholder for product list -->
+      </div>
+    </section>
+
+    <!-- Orders Section -->
+    <section id="orders">
+      <h1 class="text-4xl font-bold text-white mb-6">Orders</h1>
+      <div class="card p-6 rounded-3xl shadow-xl">
+        <p class="text-gray-400 text-center">Incoming orders will be displayed here for fulfillment.</p>
+        <!-- Placeholder for orders list -->
+      </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section id="analytics">
+      <h1 class="text-4xl font-bold text-white mb-6">Analytics</h1>
+      <div class="card p-6 rounded-3xl shadow-xl">
+        <p class="text-gray-400 text-center">Detailed sales and performance data will be shown here.</p>
+        <!-- Placeholder for charts and reports -->
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Simple SPA logic to show/hide sections
+    function showSection(id) {
+      // Deactivate all menu links and hide all sections
+      document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active'));
+      document.querySelectorAll('.main-content section').forEach(section => section.classList.remove('active'));
+
+      // Activate the clicked link and show the corresponding section
+      document.querySelector(`[onclick*='${id}']`).classList.add('active');
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>

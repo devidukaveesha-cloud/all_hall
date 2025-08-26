@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product | All Hall</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* General Reset */
+        body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: url("wall.png") no-repeat center center fixed;
+      background-size: cover;
+      padding-bottom: 80px; /* keep space for bottom nav */
+    }
+    .header-icons a {
+      color: #fff; /* makes them white */
+      font-size: 18px;
+      margin-left: 12px;
+    }
+
+    .header-icons a:hover {
+      color: #ffc400; /* gold/yellow hover */
+    }
+
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: #111;
+      color: #fff;
+    }
+
+    .logo a {
+      color: #ffc400;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .product-page {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .product-image {
+      flex: 1 1 400px;
+      max-width: 600px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .product-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .product-details {
+      flex: 1 1 400px;
+      max-width: 600px;
+      background: rgba(0,0,0,0.7);
+      padding: 30px;
+      border-radius: 10px;
+      color: #fff;
+    }
+
+    .product-details h1 {
+      color: #ffc400;
+      margin-top: 0;
+    }
+
+    .price-section {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+    }
+    .current-price {
+      font-size: 2em;
+      color: #ffc400;
+      font-weight: bold;
+    }
+    .old-price {
+      text-decoration: line-through;
+      color: #aaa;
+      margin-left: 10px;
+    }
+
+    .options {
+      margin: 20px 0;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    .options select, .options input {
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    /* Updated button styles */
+    .btn {
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 50px; /* Fully rounded buttons */
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    /* Animation on hover/active */
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .actions .add-to-cart { background: #ffcc00; }
+    .actions .buy-now { background: #ff9900; font-size: 1.2rem; }
+    .actions .small { background: #222; color: #fff; padding: 0.5rem 1rem; }
+
+    .rating { margin: 1rem 0; }
+    .description { margin-top: 2rem; }
+
+    /* Styles for the review box */
+    .reviews {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .reviews h2 {
+      color: #ffc400;
+      border-bottom: 2px solid #ffc400;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .review-form textarea {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: none;
+      background: #333;
+      color: #fff;
+      resize: vertical;
+    }
+    .review-form input[type="file"] {
+      color: #fff;
+    }
+    .review-form .submit {
+      width: 100%;
+      background: #ffcc00;
+      padding: 12px;
+      border: none;
+      border-radius: 50px; /* Fully rounded buttons */
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    /* Updated review text color to white for clarity */
+    .review-list {
+      margin-top: 1rem;
+      color: white; 
+    }
+    .review {
+      border-bottom: 1px solid #444;
+      padding: 1rem 0;
+    }
+    .review img {
+      margin-top: 0.5rem;
+      border-radius: 5px;
+    }
+    /* Default (desktop) layout is fine */
+    .product-page {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-image {
+      flex-shrink: 0;
+    }
+
+    /* Mobile First */
+    @media (max-width: 768px) {
+      .product-page {
+        flex-direction: column;
+        padding: 20px;
+        align-items: center;
+      }
+    }
+
+    /* Bottom Nav Bar */
+    .main-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background: rgba(0,0,0,0.9);
+      padding: 10px 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+    }
+    .main-nav a {
+      color: gold;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 12px;
+    }
+    .main-nav a i {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    .main-nav a:hover {
+      color: #fff;
+    }
+    .toast-container {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 10px;
+      z-index: 1000;
+      max-width: 90%;
+    }
+    .toast {
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      animation: fadeInOut 4s forwards;
+      text-align: center;
+      word-wrap: break-word;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: scale(0.8); }
+      10% { opacity: 1; transform: scale(1); }
+      90% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.8); }
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="logo">
+      <a href="index.html">MyShop</a>
+    </div>
+
+    <div class="header-icons">
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+      <a href="myorders.html"><i class="fas fa-box"></i></a>
+      <a href="login.html"><i class="fas fa-user"></i></a>
+    </div>
+  </header>
+
+  <main class="product-page">
+    <div class="product-image">
+      <img src="https://via.placeholder.com/600x400" alt="Product Image">
+    </div>
+
+    <div class="product-details">
+      <h1>Awesome Product Title</h1>
+      <p>Short description of the product. It's an amazing product that you must buy. Get it now while stocks last!</p>
+
+      <div class="price-section">
+        <span class="current-price">$49.99</span>
+        <span class="old-price">$59.99</span>
+      </div>
+
+      <div class="rating">
+        <i class="fas fa-star" style="color:gold;"></i>
+        <i class="fas fa-star" style="color:gold;"></i>
+        <i class="fas fa-star" style="color:gold;"></i>
+        <i class="fas fa-star" style="color:gold;"></i>
+        <i class="far fa-star" style="color:gold;"></i>
+        (4.0/5.0)
+      </div>
+
+      <div class="options">
+        <label>Color</label>
+        <select>
+          <option>Black</option>
+          <option>White</option>
+          <option>Red</option>
+        </select>
+      </div>
+
+      <div class="options">
+        <label>Size</label>
+        <select>
+          <option>Small</option>
+          <option>Medium</option>
+          <option>Large</option>
+        </select>
+      </div>
+
+      <div class="actions">
+        <button class="btn add-to-cart">Add to Cart</button>
+        <button class="btn buy-now">Buy Now</button>
+      </div>
+
+      <div class="description">
+        <h2>Product Description</h2>
+        <p>This is a more detailed description of the product. It highlights all the key features, materials, and benefits. It's designed to give the customer all the information they need to make a purchase decision.</p>
+        <p>This product is made with high-quality materials, ensuring durability and longevity. It's perfect for everyday use and will exceed your expectations.</p>
+        <button class="btn small" onclick="shareProduct()">Share Product Link</button>
+      </div>
+    </div>
+  </main>
+
+  <section class="reviews">
+    <h2>Customer Reviews</h2>
+    <form id="review-form">
+      <textarea placeholder="Write a review..."></textarea>
+      <input type="file" id="review-photo">
+      <button type="submit" class="btn submit">Submit Review</button>
+    </form>
+
+    <div class="review-list">
+      <div class="review">
+        <p>Great product, very happy with my purchase!</p>
+        <p><small>— Jane Doe</small></p>
+      </div>
+      <div class="review">
+        <p>The color is slightly different than expected, but the quality is excellent.</p>
+        <p><small>— John Smith</small></p>
+      </div>
+      <div class="review">
+        <p>I love this product, it's exactly what I needed.</p>
+        <p><small>— Sam Wilson</small></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAV -->
+  <nav class="main-nav">
+    <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="cart.html"><i class="fas fa-shopping-cart"></i><span>Cart</span></a>
+    <a href="myorders.html"><i class="fas fa-box"></i><span>Orders</span></a>
+    <a href="seller_center.html"><i class="fas fa-store"></i><span>Seller</span></a>
+    <a href="login.html"><i class="fas fa-user"></i><span>Login</span></a>
+  </nav>
+
+  <footer>
+    <p>© 2025 All Hall. All rights reserved.</p>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+  
+  <script src="app.js"></script>
+  <script>
+    // Simple toast notification function
+    function toast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.remove();
+      }, 4000);
+    }
+    
+    // Share Button
+    function shareProduct() {
+      // document.execCommand('copy') is not supported in iframes, so we use a fallback
+      navigator.clipboard.writeText(window.location.href).then(function() {
+        toast("Product link copied!");
+      }, function(err) {
+        toast('Could not copy text: ', err);
+      });
+    }
+
+    // Reviews
+    document.getElementById("review-form").addEventListener("submit", function(e){
+      e.preventDefault();
+      let text = this.querySelector("textarea").value.trim();
+      let file = document.getElementById("review-photo").files[0];
+      
+      if (!text && !file) {
+        toast("Please write a review or upload a photo.");
+        return;
+      }
+      
+      let div = document.createElement("div");
+      div.className = "review";
+      div.innerHTML = `<p>${text}</p>`;
+      
+      if(file){
+        let img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.style.maxWidth = "200px";
+        img.style.marginTop = "10px";
+        div.appendChild(img);
+      }
+      
+      document.querySelector(".review-list").prepend(div);
+      this.reset();
+      toast("Review submitted!");
+    });
+  </script>
+</body>
+</html>

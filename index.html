@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Hall | Home</title>
+
+  <!-- Existing stylesheet -->
+  <link rel="stylesheet" href="theme.css">
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Tailwind CSS for utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom script file (deferred) -->
+  <script src="app.js"></script>
+
+  <style>
+    /* Custom CSS for the slideshow to ensure proper positioning and aesthetics */
+    .slideshow-container {
+      max-width: 1000px; /* Adjust as needed */
+      position: relative;
+      margin: auto;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      font-family: 'Inter', system-ui, Segoe UI, Roboto, Arial;
+    }
+
+    .mySlides {
+      display: none;
+      transition: opacity 0.6s ease-in-out;
+    }
+
+    .slide-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .slide-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+    }
+
+    .slide-text h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .slide-text p {
+      font-size: 1.2rem;
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 1rem;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    .dot-container {
+      text-align: center;
+      padding: 1rem;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .dot {
+      cursor: pointer;
+      height: 12px;
+      width: 12px;
+      margin: 0 4px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+
+    .active-dot, .dot:hover {
+      background-color: #717171;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+       
+  <header class="main-header">
+    <div class="logo">
+      <a href="index.html">MyShop</a>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search products...">
+      <button><i class="fas fa-search"></i></button>
+    </div>
+
+    <div class="header-icons">
+      <a href="cart.html" title="Cart"><i class="fas fa-shopping-cart"></i></a>
+      <a href="myorders.html" title="Orders"><i class="fas fa-box"></i></a>
+      <a href="login.html" title="Login"><i class="fas fa-user"></i></a>
+    </div>
+  </header>
+
+  <!-- Replaced the original hero section with the slideshow container -->
+  <section class="hero p-4 md:p-8 flex justify-center items-center">
+    <div class="slideshow-container w-full">
+      
+      <!-- Slide 1 -->
+      <div class="mySlides fade">
+        <img src="https://placehold.co/1000x400/FFC400/000?text=20%25+OFF+All+Gadgets" class="slide-image" alt="Gadgets Sale">
+        <div class="slide-text">
+          <h1>Get 20% OFF all gadgets</h1>
+          <p>Use code <strong>GADGET20</strong> at checkout!</p>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="mySlides fade">
+        <img src="https://placehold.co/1000x400/FF5252/FFF?text=New+Arrivals+Alert" class="slide-image" alt="New Arrivals">
+        <div class="slide-text">
+          <h1>Fresh Styles, Just For You</h1>
+          <p>Explore our latest collection of apparel and accessories.</p>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="mySlides fade">
+        <img src="https://placehold.co/1000x400/22C55E/FFF?text=Limited+Time+Offer" class="slide-image" alt="Limited Time Offer">
+        <div class="slide-text">
+          <h1>Limited Time Offer!</h1>
+          <p>Grab your favorite electronics at unbeatable prices.</p>
+        </div>
+      </div>
+
+      <!-- Next and previous buttons -->
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      
+      <!-- Dots container -->
+      <div class="dot-container">
+        <span class="dot" onclick="currentSlide(1)"></span> 
+        <span class="dot" onclick="currentSlide(2)"></span> 
+        <span class="dot" onclick="currentSlide(3)"></span> 
+      </div>
+    </div>
+  </section>
+
+  <main id="product-grid" class="product-list">
+  </main>
+
+  <nav class="main-nav">
+    <a href="index.html" class="active"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="cart.html"><i class="fas fa-shopping-cart"></i><span>Cart</span></a>
+    <a href="myorders.html"><i class="fas fa-box"></i><span>Orders</span></a>
+    <a href="seller_center.html"><i class="fas fa-store"></i><span>Seller</span></a>
+    <a href="login.html"><i class="fas fa-user"></i><span>Login</span></a>
+  </nav>
+
+  <footer>
+    <p>© 2025 All Hall. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let slideIndex = 1;
+    let autoSlideTimer;
+
+    // Show the initial slide and start the auto-play timer
+    window.onload = function() {
+      showSlides(slideIndex);
+      startAutoSlide();
+    };
+
+    // Controls for Next/Previous buttons
+    function plusSlides(n) {
+      clearTimeout(autoSlideTimer);
+      showSlides(slideIndex += n);
+      startAutoSlide();
+    }
+
+    // Controls for Dot navigation
+    function currentSlide(n) {
+      clearTimeout(autoSlideTimer);
+      showSlides(slideIndex = n);
+      startAutoSlide();
+    }
+
+    // Main function to display the slides
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active-dot", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active-dot";
+    }
+
+    // Function to automatically advance the slideshow
+    function startAutoSlide() {
+      autoSlideTimer = setTimeout(() => {
+        plusSlides(1);
+      }, 5000); // Change image every 5 seconds
+    }
+  </script>
+</body>
+</html>
