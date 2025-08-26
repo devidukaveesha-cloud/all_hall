@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  
+
   <style>
     :root{
       --bg:#0f0f0f; --surface:#171717; --soft:#1f1f1f;
@@ -41,81 +41,37 @@
       color: var(--accent);
       margin-bottom: 20px;
     }
-    .input-group {
-      margin-bottom: 15px;
-      text-align: left;
-    }
-    .input-group label {
-      display: block;
-      margin-bottom: 5px;
-      color: var(--muted);
-    }
+    .input-group { margin-bottom: 15px; text-align: left; }
+    .input-group label { display: block; margin-bottom: 5px; color: var(--muted); }
     .input-group input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid var(--soft);
-      background: var(--soft);
-      color: var(--text);
-      font-size: 1rem;
+      width: 100%; padding: 12px; border-radius: 8px;
+      border: 1px solid var(--soft); background: var(--soft);
+      color: var(--text); font-size: 1rem;
     }
     .input-group input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 5px rgba(255, 196, 0, 0.5);
-    }
-    .social-login {
-      margin-top: 20px;
-    }
-    .social-btn {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      background: var(--soft);
-      color: var(--text);
-      border: 1px solid var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 10px;
-      transition: background 0.3s ease;
-    }
-    .social-btn:hover {
-      background: #333;
-    }
-    .social-btn i {
-      margin-right: 10px;
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 5px rgba(255,196,0,.5);
     }
     .submit-btn {
-      width: 100%;
-      background: var(--accent);
-      color: var(--bg);
-      font-weight: 800;
-      padding: 15px;
-      border-radius: var(--radius);
-      margin-top: 20px;
+      width: 100%; background: var(--accent); color: var(--bg);
+      font-weight: 800; padding: 15px; border-radius: var(--radius); margin-top: 20px;
     }
-    .auth-footer {
-      margin-top: 20px;
-      font-size: 0.9rem;
-      color: var(--muted);
+    .social-btn {
+      width: 100%; padding: 12px; border-radius: 8px;
+      background: var(--soft); color: var(--text); border: 1px solid var(--muted);
+      display: flex; align-items: center; justify-content: center; margin-top: 10px;
     }
-    .auth-footer a {
-      color: var(--accent);
-      font-weight: bold;
-    }
-    .error-msg {
-      color: var(--danger);
-      margin-top: 15px;
-      text-align: left;
-    }
+    .social-btn i { margin-right: 10px; }
+    .auth-footer { margin-top: 20px; font-size: 0.9rem; color: var(--muted); }
+    .auth-footer a { color: var(--accent); font-weight: bold; }
+    .error-msg { color: var(--danger); margin-top: 15px; text-align: left; }
   </style>
 </head>
 <body>
   <div class="auth-container">
     <h2><i class="fas fa-user-plus"></i> Register</h2>
-
-    <!-- ✅ wrapped inputs inside form -->
+    
+    <!-- ✅ Correct form id -->
     <form id="register-form">
       <div class="input-group">
         <label for="reg-name">Full Name</label>
@@ -133,40 +89,26 @@
     </form>
 
     <div class="social-login">
-      <button id="btn-google-register" class="social-btn"><i class="fab fa-google"></i> Register with Google</button>
+      <button id="btn-google-register" class="social-btn">
+        <i class="fab fa-google"></i> Register with Google
+      </button>
     </div>
+
     <p id="register-error-msg" class="error-msg"></p>
     <div class="auth-footer">
       Already have an account? <a href="login.html">Login here</a>
     </div>
   </div>
 
-  <!-- A small message box to replace alerts -->
   <div id="message-box" style="display:none;"></div>
 
-  <!-- ✅ Firebase compat SDKs -->
+  <!-- ✅ Firebase COMPAT SDKs (not v11) -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 
-  <!-- your backend logic -->
+  <!-- ✅ Load your backend -->
   <script src="app.js"></script>
-  
-  <script>
-    // Custom toast
-    function toast(message, duration = 3000) {
-      const toastEl = document.getElementById('message-box');
-      if (toastEl) {
-        toastEl.textContent = message;
-        toastEl.style.display = 'block';
-        toastEl.style.opacity = '1';
-        setTimeout(() => {
-          toastEl.style.opacity = '0';
-          setTimeout(() => toastEl.style.display = 'none', 300);
-        }, duration);
-      }
-    }
-  </script>
 </body>
 </html>
