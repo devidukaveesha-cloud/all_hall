@@ -140,25 +140,24 @@
   <div id="toast" class="toast"></div>
 
   <!-- Firebase SDKs (CDN, v10+) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import {
-      getAuth, onAuthStateChanged, signInWithEmailAndPassword,
-      createUserWithEmailAndPassword, sendPasswordResetEmail,
-      GoogleAuthProvider, signInWithPopup, updateProfile
-    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+ <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getAuth, onAuthStateChanged, signInWithEmailAndPassword,
+      createUserWithEmailAndPassword, sendPasswordResetEmail,
+      GoogleAuthProvider, signInWithPopup, updateProfile
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-    // 1) PASTE YOUR REAL CONFIG HERE
-    const firebaseConfig = {
-  apiKey: "AIzaSyDKiQvar1lMhiqYL5ZLDh2qMJRjTbyHSA",
-  authDomain: "all-hall.firebaseapp.com",
-  projectId: "all-hall",
-  storageBucket: "all-hall.appspot.com",
-  messagingSenderId: "141379512602",
-  appId: "1:141379512602:web:83f6f9465564693efa4a43",
-  measurementId: "G-QQPRQQJW4L"
+    // 1) PASTE YOUR REAL CONFIG HERE
+    const firebaseConfig = {
+  apiKey: "AIzaSyDKiQvar1lMhiqYL5ZLDh2qMJRjTbyHSA",
+  authDomain: "all-hall.firebaseapp.com",
+  projectId: "all-hall",
+  storageBucket: "all-hall.appspot.com",
+  messagingSenderId: "141379512602",
+  appId: "1:141379512602:web:83f6f9465564693efa4a43",
+  measurementId: "G-QQPRQQJW4L"
 };
-
 
     // 2) Init
     const app = initializeApp(firebaseConfig);
@@ -245,3 +244,4 @@
   </script>
 </body>
 </html>
+
