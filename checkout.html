@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | All Hall</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("wall.png") no-repeat center center/cover;
+      color: #fff;
+    }
+    .main-header, footer {
+      background: rgba(0,0,0,0.8);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .main-header .logo a { color: #ffc400; font-weight: bold; font-size: 1.3em; text-decoration: none; }
+    .header-icons a { margin-left: 12px; color: #ffc400; }
+
+    /* Step Tracker */
+    .steps {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(0,0,0,0.8);
+      padding: 15px;
+      border-radius: 8px;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    .step {
+      text-align: center;
+      color: #888;
+      font-weight: bold;
+    }
+    .step i {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 6px;
+      color: #ffc400;
+    }
+    .step.active { color: #ffc400; }
+
+    .checkout-container {
+      max-width: 800px;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 10px;
+    }
+    .checkout-card {
+      background: rgba(0,0,0,0.75);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .checkout-card h2 { margin-top: 0; color: #ffc400; }
+    .checkout-card input, .checkout-card select {
+      width: 95%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+    }
+    .summary-item, .summary-total {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+    .btn.buy-now {
+      width: 100%;
+      background: #ffc400;
+      color: #000;
+      font-weight: bold;
+      padding: 15px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn.buy-now:hover { background: #ffdb4d; }
+    .payment-option {
+      display: flex;
+      align-items: center;   /* text + radio එක same line middle යන්න */
+      margin-bottom: 12px;   /* gap between options */
+      font-size: 16px;       /* text size */
+      cursor: pointer;
+      color: #fff;           /* text color white (wallpaper background visible නම්) */
+    }
+
+    .payment-option input[type="radio"] {
+      margin-right: 10px;    /* radio + text අතර space */
+      transform: scale(1.2); /* little bigger radio */
+      accent-color: gold;    /* radio button color (modern browsers) */
+    }
+
+
+    /* Bottom Nav */
+    .main-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    .main-nav a {
+      color: #ffc400;
+      text-align: center;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .main-nav i { display: block; font-size: 18px; margin-bottom: 5px; }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="logo"><a href="index.html">AllHall</a></div>
+    <div class="header-icons">
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+      <a href="myorders.html"><i class="fas fa-box"></i></a>
+      <a href="login.html"><i class="fas fa-user"></i></a>
+    </div>
+  </header>
+
+  <!-- Step Tracker -->
+  <div class="steps">
+    <div class="step"><i class="fas fa-shopping-cart"></i> Cart</div>
+    <div class="step active"><i class="fas fa-file-invoice"></i> Checkout</div>
+    <div class="step"><i class="fas fa-credit-card"></i> Payment</div>
+    <div class="step"><i class="fas fa-check-circle"></i> Done</div>
+  </div>
+
+  <main class="checkout-container">
+    <!-- Shipping Info -->
+    <div class="checkout-card">
+      <h2>Shipping Information</h2>
+      <input type="text" placeholder="Full Name">
+      <input type="text" placeholder="Address">
+      <input type="text" placeholder="City">
+      <input type="text" placeholder="Postal Code">
+      <input type="text" placeholder="Phone Number">
+    </div>
+
+    <!-- Payment Method -->
+        <div class="checkout-card">
+      <h2>Payment Method</h2>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="card"> 
+        Credit/Debit Card
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="cod"> 
+        Cash on Delivery
+      </label>
+    </div>
+
+
+    <!-- Order Summary -->
+    <div class="checkout-card">
+      <h2>Order Summary</h2>
+      <div class="summary-item"><span>Awesome Product</span><span>$49.99</span></div>
+      <div class="summary-item"><span>Shipping</span><span>$5.00</span></div>
+      <div class="summary-total"><strong>Total</strong><strong>$54.99</strong></div>
+      <button class="btn buy-now">Place Order</button>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="main-nav">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+    <a href="myorders.html"><i class="fas fa-box"></i> Orders</a>
+    <a href="seller_center.html"><i class="fas fa-store"></i> Seller</a>
+    <a href="login.html"><i class="fas fa-user"></i> Login</a>
+  </nav>
+
+  <footer>
+    <p style="text-align:center; padding:15px;">© 2025 All Hall. All rights reserved.</p>
+  </footer>
+</body>
+</html>

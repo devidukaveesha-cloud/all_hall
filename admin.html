@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("wall.png") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      padding-top: 20px;
+    }
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: gold;
+    }
+    .sidebar a {
+      padding: 15px 20px;
+      color: gold;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+    .sidebar a:hover {
+      background: rgba(255,215,0,0.2);
+    }
+    .sidebar a.active {
+      background: rgba(255,215,0,0.3);
+    }
+
+    /* Content */
+    .content {
+      margin-left: 220px;
+      padding: 20px;
+      width: 100%;
+      color: #fff;
+    }
+    section {
+      display: none;
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    section.active {
+      display: block;
+    }
+    h3 { color: gold; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    table, th, td {
+      border: 1px solid #444;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: gold;
+      font-weight: bold;
+    }
+    button:hover { background: darkorange; }
+
+    /* Search Box */
+    .search-box {
+      margin-bottom: 15px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2><i class="fas fa-user-shield"></i> Admin</h2>
+    <a class="active" onclick="showSection('users')"><i class="fas fa-users"></i> Users</a>
+    <a onclick="showSection('products')"><i class="fas fa-box"></i> Products</a>
+    <a onclick="showSection('approvals')"><i class="fas fa-check-circle"></i> Approvals</a>
+    <a onclick="showSection('reports')"><i class="fas fa-chart-bar"></i> Reports</a>
+    <a onclick="showSection('search')"><i class="fas fa-search"></i> Search</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <!-- Users -->
+    <section id="users" class="active">
+      <h3>👤 Users</h3>
+      <table id="usersTable">
+        <tr><th>User Code</th><th>Name</th><th>Email</th><th>Role</th></tr>
+        <tr><td>U001</td><td>John Doe</td><td>john@mail.com</td><td>Seller</td></tr>
+        <tr><td>U002</td><td>Jane Admin</td><td>jane@mail.com</td><td>Admin</td></tr>
+      </table>
+    </section>
+
+    <!-- Products -->
+    <section id="products">
+      <h3>📦 Products</h3>
+      <table id="productsTable">
+        <tr><th>Item Code</th><th>Product</th><th>Seller</th><th>Status</th></tr>
+        <tr><td>P101</td><td>Red T-Shirt</td><td>Seller123</td><td>Active</td></tr>
+        <tr><td>P102</td><td>Blue Jeans</td><td>Seller456</td><td>Active</td></tr>
+      </table>
+    </section>
+
+    <!-- Approvals -->
+    <section id="approvals">
+      <h3>✅ Pending Approvals</h3>
+      <table>
+        <tr><th>Item Code</th><th>Item</th><th>Seller</th><th>Action</th></tr>
+        <tr>
+          <td>P999</td>
+          <td>New Shoes</td>
+          <td>Seller999</td>
+          <td>
+            <button onclick="approve(this)">Approve</button>
+            <button onclick="reject(this)">Reject</button>
+          </td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Reports -->
+    <section id="reports">
+      <h3>📊 Reports</h3>
+      <p>Sales this month: <b>$12,340</b></p>
+      <p>Total Orders: <b>450</b></p>
+      <p>Top Seller: <b>Seller123</b></p>
+    </section>
+
+    <!-- Search -->
+    <section id="search">
+      <h3>🔎 Search (User / Item Code)</h3>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Enter User Code or Item Code (e.g. U001, P101)">
+      </div>
+      <div id="searchResults"></div>
+    </section>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll(".sidebar a").forEach(a=>a.classList.remove("active"));
+      document.querySelectorAll("section").forEach(sec=>sec.classList.remove("active"));
+      document.querySelector(".sidebar a[onclick*='"+id+"']").classList.add("active");
+      document.getElementById(id).classList.add("active");
+    }
+
+    function approve(btn){
+      btn.parentElement.parentElement.remove();
+      alert("✅ Item Approved!");
+    }
+    function reject(btn){
+      btn.parentElement.parentElement.remove();
+      alert("❌ Item Rejected!");
+    }
+
+    // Simple search system
+    document.getElementById("searchInput").addEventListener("keyup", function(){
+      let query = this.value.trim().toUpperCase();
+      let results = "";
+
+      // Check Users
+      document.querySelectorAll("#usersTable tr").forEach((row, index)=>{
+        if(index === 0) return; // skip header
+        if(row.cells[0].textContent.toUpperCase().includes(query)){
+          results += "<p><b>User Found:</b> " + row.innerText + "</p>";
+        }
+      });
+
+      // Check Products
+      document.querySelectorAll("#productsTable tr").forEach((row, index)=>{
+        if(index === 0) return; // skip header
+        if(row.cells[0].textContent.toUpperCase().includes(query)){
+          results += "<p><b>Product Found:</b> " + row.innerText + "</p>";
+        }
+      });
+
+      document.getElementById("searchResults").innerHTML = results || "<p style='color:red'>No results found</p>";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart | All Hall</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: url("wall.png") no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+    }
+
+    .cart-page {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+    }
+
+    .cart-page h1 {
+      margin-bottom: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .cart-item img {
+      width: 80px;
+      border-radius: 6px;
+      margin-right: 15px;
+    }
+
+    .cart-details {
+      flex: 1;
+    }
+
+    .cart-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-remove {
+      background: #ff4d4d;
+      color: #fff;
+    }
+
+    .btn-checkout {
+      background: #ffc400;
+      color: #000;
+      margin-top: 20px;
+      width: 100%;
+      font-size: 18px;
+    }
+
+    .cart-total {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="main-header">
+    <div class="logo"><a href="index.html">AllHall</a></div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search products...">
+      <button><i class="fas fa-search"></i></button>
+    </div>
+    <div class="header-icons">
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+      <a href="myorders.html"><i class="fas fa-box"></i></a>
+      <a href="login.html"><i class="fas fa-user"></i></a>
+    </div>
+  </header>
+
+  <main class="cart-page">
+    <h1>Your Cart</h1>
+
+    <!-- Example cart item -->
+    <div class="cart-item">
+      <img src="https://via.placeholder.com/80" alt="Product">
+      <div class="cart-details">
+        <h3>Awesome Product</h3>
+        <p>$49.99</p>
+      </div>
+      <div class="cart-actions">
+        <button class="btn btn-remove">Remove</button>
+      </div>
+    </div>
+
+    <div class="cart-total">
+      Total: $49.99
+    </div>
+
+    <button class="btn btn-checkout">Proceed to Checkout</button>
+  </main>
+
+  <!-- NAV -->
+  <nav class="main-nav">
+    <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="cart.html" class="active"><i class="fas fa-shopping-cart"></i><span>Cart</span></a>
+    <a href="myorders.html"><i class="fas fa-box"></i><span>Orders</span></a>
+    <a href="seller_center.html"><i class="fas fa-store"></i><span>Seller</span></a>
+    <a href="login.html"><i class="fas fa-user"></i><span>Login</span></a>
+  </nav>
+
+  <footer>
+    <p>© 2025 All Hall. All rights reserved.</p>
+  </footer>
+</body>
+</html>

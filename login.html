@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AllHall Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9800, #ff5722);
+      margin: 0;
+    }
+    .container {
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      width: 350px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    h2 {
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #ff9800;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ffc107;
+    }
+    .google {
+      background: white;
+      color: black;
+    }
+    .logout {
+      background: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome to AllHall</h2>
+
+    <!-- Register -->
+    <h3>Register</h3>
+    <input type="email" id="regEmail" placeholder="Email">
+    <input type="password" id="regPassword" placeholder="Password">
+    <button id="registerBtn">Create Account</button>
+
+    <!-- Login -->
+    <h3>Login</h3>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button id="loginBtn">Login</button>
+
+    <!-- Google Login -->
+    <button id="googleBtn" class="google">Sign in with Google</button>
+
+    <!-- Logout -->
+    <button id="logoutBtn" class="logout">Logout</button>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } 
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    // ✅ Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDKiQvra1lMhiqYL5ZLDAh2qMJRjTByHSA",
+      authDomain: "all-hall.firebaseapp.com",
+      projectId: "all-hall",
+      storageBucket: "all-hall.appspot.com",   // Corrected!
+      messagingSenderId: "141379512602",
+      appId: "1:141379512602:web:83f6f94655646893efa4a3",
+      measurementId: "G-QQPR0QJW4L"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Register
+    document.getElementById("registerBtn").addEventListener("click", () => {
+      const email = document.getElementById("regEmail").value;
+      const password = document.getElementById("regPassword").value;
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("✅ Account Created: " + userCredential.user.email);
+        })
+        .catch((error) => {
+          alert("❌ " + error.message);
+        });
+    });
+
+    // Login
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("✅ Logged In as: " + userCredential.user.email);
+        })
+        .catch((error) => {
+          alert("❌ " + error.message);
+        });
+    });
+
+    // Google Login
+    document.getElementById("googleBtn").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          const user = result.user;
+          alert("✅ Google Login Success! Welcome " + user.displayName);
+        })
+        .catch((error) => {
+          alert("❌ " + error.message);
+        });
+    });
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        alert("✅ Logged Out!");
+      }).catch((error) => {
+        alert("❌ " + error.message);
+      });
+    });
+  </script>
+</body>
+</html>

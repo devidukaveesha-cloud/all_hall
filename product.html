@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product | All Hall</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* General Reset */
+        body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: url("wall.png") no-repeat center center fixed;
+      background-size: cover;
+      padding-bottom: 80px; /* keep space for bottom nav */
+    }
+    .header-icons a {
+      color: #fff; /* makes them white */
+      font-size: 18px;
+      margin-left: 12px;
+    }
+
+    .header-icons a:hover {
+      color: #ffc400; /* gold/yellow hover */
+    }
+
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: #111;
+      color: #fff;
+    }
+
+    .logo a {
+      color: #ffc400;
+      font-size: 20px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .search-bar input {
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .search-bar button {
+      background: #ffc400;
+      border: none;
+      padding: 6px 10px;
+      margin-left: 4px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .product-page {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6); /* transparent dark */
+      border-radius: 8px;
+      max-width: 1000px;
+      margin: 20px auto;
+      color: #fff; /* ensure text is readable */
+    }
+
+
+    .product-image {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+    .product-image img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .discount-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ff4444;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .product-info {
+      flex: 1;
+      min-width: 280px;
+    }
+    .price {
+      font-size: 20px;
+    }
+    .old-price {
+      text-decoration: line-through;
+      color: #888;
+      margin-left: 10px;
+    }
+
+    .variants label {
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    .variants select {
+      padding: 6px;
+      margin-right: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .actions {
+      margin: 15px 0;
+    }
+    .btn {
+      padding: 10px 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      margin: 4px 2px;
+      font-size: 15px;
+    }
+    .add-to-cart {
+      background: #ffc400;
+      font-weight: bold;
+    }
+    .buy-now {
+      background: #ff6600;
+      color: #fff;
+      font-weight: bold;
+    }
+    .btn.small {
+      background: #eee;
+      font-size: 14px;
+    }
+
+    .rating {
+      margin: 10px 0;
+      font-size: 20px;
+      color: #ccc;
+    }
+
+    .description {
+      margin-top: 20px;
+    }
+
+       .reviews {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6); /* semi-transparent dark */
+      border-radius: 8px;
+      color: #fff; /* makes text readable */
+      backdrop-filter: blur(6px); /* optional: nice glass effect */
+    }
+
+    .review-form textarea {
+      width: 100%;
+      height: 80px;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 8px;
+    }
+    .review-form input[type=file] {
+      margin-bottom: 8px;
+    }
+    .review-form button {
+      background: #ffc400;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .review {
+      margin-top: 12px;
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+    }
+
+    /* Bottom Nav */
+    .main-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #111;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 8px 0;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.4);
+      z-index: 1000;
+    }
+    .main-nav a {
+      color: #fff;
+      font-size: 13px;
+      text-align: center;
+      flex: 1;
+      text-decoration: none;
+    }
+    .main-nav a i {
+      font-size: 18px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .main-nav a.active {
+      color: #ffc400;
+    }
+    @media (max-width: 600px) {
+      .main-nav a span {
+        display: none;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="main-header">
+    <div class="logo"><a href="index.html">AllHall</a></div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search products...">
+      <button><i class="fas fa-search"></i></button>
+    </div>
+    <div class="header-icons">
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+      <a href="myorders.html"><i class="fas fa-box"></i></a>
+      <a href="login.html"><i class="fas fa-user"></i></a>
+    </div>
+  </header>
+
+  <main class="product-page">
+    <div class="product-image">
+      <span class="discount-badge">-20%</span>
+      <img src="https://via.placeholder.com/400x400" alt="Product Image">
+    </div>
+    <div class="product-info">
+      <h1>Awesome Product Name</h1>
+      <p class="price">
+        <span class="new-price">$49.99</span>
+        <span class="old-price">$69.99</span>
+      </p>
+
+      <div class="variants">
+        <label for="color">Color:</label>
+        <select id="color">
+          <option>Red</option>
+          <option>Blue</option>
+          <option>Black</option>
+        </select>
+        <label for="size">Size:</label>
+        <select id="size">
+          <option>S</option>
+          <option>M</option>
+          <option>L</option>
+          <option>XL</option>
+        </select>
+      </div>
+
+      <div class="actions">
+        <button class="btn add-to-cart">🛒 Add to Cart</button>
+        <button class="btn buy-now">⚡ Buy Now</button>
+        <button class="btn small" onclick="shareProduct()">🔗 Share</button>
+        <button class="btn small">♡ Wishlist</button>
+      </div>
+
+      <div class="rating">
+        <span class="stars">☆☆☆☆☆</span>
+        <span id="rating-text">0/5</span>
+      </div>
+
+      <div class="description">
+        <h3>Description</h3>
+        <p>This is a detailed description of the product. Highlight features, materials, dimensions, and other details customers want to know.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Reviews -->
+  <section class="reviews">
+    <h2>Customer Reviews</h2>
+    <form id="review-form" class="review-form">
+      <textarea placeholder="Write your review..."></textarea>
+      <input type="file" id="review-photo" accept="image/*">
+      <button type="submit">Submit Review</button>
+    </form>
+    <div id="reviews-list">
+      <div class="review">
+        <strong>John D.</strong> ★★★★☆
+        <p>Loved the product, great quality!</p>
+        <img src="https://via.placeholder.com/100x100" alt="Review photo">
+      </div>
+    </div>
+  </section>
+
+  <!-- NAV -->
+  <nav class="main-nav">
+    <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="cart.html"><i class="fas fa-shopping-cart"></i><span>Cart</span></a>
+    <a href="myorders.html"><i class="fas fa-box"></i><span>Orders</span></a>
+    <a href="seller_center.html"><i class="fas fa-store"></i><span>Seller</span></a>
+    <a href="login.html"><i class="fas fa-user"></i><span>Login</span></a>
+  </nav>
+
+  <footer>
+    <p>© 2025 All Hall. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Share Button
+    function shareProduct() {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Product link copied!");
+    }
+
+    // Reviews
+    document.getElementById("review-form").addEventListener("submit", function(e){
+      e.preventDefault();
+      let text = this.querySelector("textarea").value;
+      let file = document.getElementById("review-photo").files[0];
+      
+      let div = document.createElement("div");
+      div.className = "review";
+      div.innerHTML = `<p>${text}</p>`;
+      
+      if(file){
+        let img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.style.maxWidth="150px";
+        img.style.marginTop="8px";
+        div.appendChild(img);
+      }
+
+      document.getElementById("reviews-list").prepend(div);
+      this.reset();
+    });
+  </script>
+</body>
+</html>

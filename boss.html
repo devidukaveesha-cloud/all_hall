@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boss Panel - SPA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;font-family:Arial,sans-serif;background:url("wall.png") no-repeat center/cover}
+    .container{display:flex;min-height:100vh}
+    .sidebar{width:240px;background:rgba(0,0,0,0.9);padding:20px;display:flex;flex-direction:column;color:gold}
+    .sidebar h2{margin-bottom:30px;color:gold}
+    .sidebar a{display:flex;align-items:center;padding:12px;margin-bottom:10px;color:gold;text-decoration:none;border-radius:8px;transition:.3s;cursor:pointer}
+    .sidebar a i{margin-right:10px;color:gold}
+    .sidebar a:hover,.sidebar a.active{background:gold;color:black}
+    .sidebar a:hover i,.sidebar a.active i{color:black}
+    .content{flex:1;padding:30px;min-height:100vh;background:rgba(0,0,0,0.6);color:white}
+    h1{color:gold;margin-bottom:20px}
+    .form-group{margin-bottom:20px}
+    .form-group label{display:block;margin-bottom:6px;color:gold}
+    .form-group input{width:100%;padding:10px;border:none;border-radius:6px}
+    button{background:gold;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;cursor:pointer}
+    button:hover{background:#ffcc00}
+    /* Sections hidden by default */
+    .section{display:none}
+    .section.active{display:block}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Boss Panel</h2>
+      <a class="menu-link active" data-target="addAdmin"><i class="fa-solid fa-user-plus"></i> Add Admin</a>
+      <a class="menu-link" data-target="addSeller"><i class="fa-solid fa-user-tie"></i> Add Seller</a>
+      <a class="menu-link" data-target="manageAdmins"><i class="fa-solid fa-users-gear"></i> Manage Admins</a>
+      <a class="menu-link" data-target="manageSellers"><i class="fa-solid fa-store"></i> Manage Sellers</a>
+      <a class="menu-link" data-target="banner"><i class="fa-solid fa-image"></i> Homepage Banner</a>
+      <a class="menu-link" data-target="reports"><i class="fa-solid fa-chart-line"></i> Reports</a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Add Admin -->
+      <div id="addAdmin" class="section active">
+        <h1>Create Admin Account</h1>
+        <div class="form-group">
+          <label for="adminName">Admin Name</label>
+          <input type="text" id="adminName" placeholder="Enter Admin Name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter Email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter Password">
+        </div>
+        <button>Add Admin</button>
+      </div>
+
+      <!-- Add Seller -->
+      <div id="addSeller" class="section">
+        <h1>Create Seller Account</h1>
+        <div class="form-group">
+          <label for="sellerName">Seller Name</label>
+          <input type="text" id="sellerName" placeholder="Enter Seller Name">
+        </div>
+        <div class="form-group">
+          <label for="sellerEmail">Email</label>
+          <input type="email" id="sellerEmail" placeholder="Enter Seller Email">
+        </div>
+        <div class="form-group">
+          <label for="sellerPassword">Password</label>
+          <input type="password" id="sellerPassword" placeholder="Enter Password">
+        </div>
+        <button>Add Seller</button>
+      </div>
+
+      <!-- Manage Admins -->
+      <div id="manageAdmins" class="section">
+        <h1>Manage Admins</h1>
+        <p>Here you can view, edit, or delete Admin accounts.</p>
+      </div>
+
+      <!-- Manage Sellers -->
+      <div id="manageSellers" class="section">
+        <h1>Manage Sellers</h1>
+        <p>Here you can view, approve, or remove Seller accounts.</p>
+      </div>
+
+      <!-- Homepage Banner -->
+      <div id="banner" class="section">
+        <h1>Homepage Banner</h1>
+        <p>Upload and manage homepage banners.</p>
+        <input type="file">
+        <button>Upload Banner</button>
+      </div>
+
+      <!-- Reports -->
+      <div id="reports" class="section">
+        <h1>Reports</h1>
+        <p>System statistics, orders, and activities.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Menu switching logic
+    const links = document.querySelectorAll('.menu-link');
+    const sections = document.querySelectorAll('.section');
+
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        // Remove active class from menu
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+
+        // Hide all sections
+        sections.forEach(sec => sec.classList.remove('active'));
+
+        // Show selected
+        document.getElementById(link.dataset.target).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

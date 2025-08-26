@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Center | All Hall</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("wall.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 80px;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+    }
+    .sidebar a {
+      color: gold;
+      font-size: 22px;
+      margin: 20px 0;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .sidebar a:hover {
+      transform: scale(1.2);
+    }
+
+    /* Content */
+    .content {
+      flex: 1;
+      padding: 30px;
+    }
+    .section {
+      display: none;
+      background: rgba(0,0,0,0.7);
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .section.active {
+      display: block;
+    }
+    h1 {
+      margin-top: 0;
+      color: gold;
+    }
+
+    /* Form Styles */
+    form label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+    form input[type="file"] {
+      background: #222;
+      color: #fff;
+    }
+    .btn {
+      background: gold;
+      border: none;
+      padding: 10px 16px;
+      margin-top: 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .product-preview {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 6px;
+    }
+    .product-preview img {
+      max-width: 150px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <a href="#" onclick="showSection('dashboard')"><i class="fa-solid fa-chart-line"></i></a>
+    <a href="#" onclick="showSection('products')"><i class="fa-solid fa-box"></i></a>
+    <a href="#" onclick="showSection('orders')"><i class="fa-solid fa-cart-shopping"></i></a>
+    <a href="#" onclick="showSection('earnings')"><i class="fa-solid fa-sack-dollar"></i></a>
+    <a href="#" onclick="showSection('profile')"><i class="fa-solid fa-user"></i></a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div id="dashboard" class="section active">
+      <h1>📊 Dashboard</h1>
+      <p>Quick stats about your sales, products, and performance.</p>
+    </div>
+
+    <div id="products" class="section">
+      <h1>📦 My Products</h1>
+      <form id="productForm">
+        <label>Product Name:</label>
+        <input type="text" id="pname" required>
+
+        <label>Price ($):</label>
+        <input type="number" id="pprice" required>
+
+        <label>Discount (%):</label>
+        <input type="number" id="pdiscount" min="0" max="100">
+
+        <label>Category:</label>
+        <select id="pcategory">
+          <option>Bags</option>
+          <option>Services</option>
+          <option>Accessories</option>
+          <option>Other</option>
+        </select>
+        <label>Color:</label>
+          <input type="text" id="pcolor" placeholder="Ex: කොල / Red / Blue">
+
+        <label>Description:</label>
+        <textarea id="pdesc" rows="3"></textarea>
+
+        <label>Upload Image:</label>
+        <input type="file" id="pimage" accept="image/*">
+
+        <button type="submit" class="btn">➕ Add Product</button>
+      </form>
+
+      <div class="product-preview" id="preview"></div>
+    </div>
+
+    <div id="orders" class="section">
+      <h1>🛒 Orders</h1>
+      <p>View and manage customer orders.</p>
+    </div>
+
+    <div id="earnings" class="section">
+      <h1>💰 Earnings</h1>
+      <p>Check your earnings and payouts.</p>
+    </div>
+
+    <div id="profile" class="section">
+      <h1>👤 Profile</h1>
+      <p>Edit your seller profile and settings.</p>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // Handle Product Form
+    document.getElementById("productForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      let name = document.getElementById("pname").value;
+      let price = document.getElementById("pprice").value;
+      let discount = document.getElementById("pdiscount").value;
+      let category = document.getElementById("pcategory").value;
+      let desc = document.getElementById("pdesc").value;
+      let file = document.getElementById("pimage").files[0];
+
+      let color = document.getElementById("pcolor").value;
+
+        preview.innerHTML = `
+          <h3>Product Preview:</h3>
+          <p><strong>${name}</strong></p>
+          <p>Price: $${price} ${discount ? " (-"+discount+"%)" : ""}</p>
+          <p>Category: ${category}</p>
+          <p>Color: ${color}</p>
+          <p>${desc}</p>
+        `;
+
+
+
+      if(file){
+        let img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        preview.appendChild(img);
+      }
+
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>
