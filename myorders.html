@@ -4,375 +4,238 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Orders - AllHall</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts for "Inter" -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
   <style>
-    /* Custom styles for a dark, elegant theme */
     body {
-      font-family: 'Inter', sans-serif;
-      background: #0f0f0f url('wall.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #eaeaea;
-      padding-bottom: 80px; /* Space for the fixed bottom nav */
       margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .main-header {
-      background: rgba(17, 17, 17, 0.9);
+      font-family: Arial, sans-serif;
+      background: url("wall.png") no-repeat center center fixed;
+      background-size: cover;
       color: #fff;
-      padding: 12px 16px;
+    }
+    header {
+      background: rgba(0, 0, 0, 0.9);
+      color: #FFD700;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
     }
-
-    .logo a {
-      color: #fff;
+    header h1 {
+      margin: 0;
       font-size: 24px;
-      font-weight: 800;
-    }
-
-    .search-bar {
-      display: flex;
-      flex-grow: 1;
-      max-width: 500px;
-    }
-
-    .search-bar input {
-      flex-grow: 1;
-      padding: 8px 16px;
-      border-radius: 9999px 0 0 9999px;
-      border: 1px solid #333;
-      background: #1f1f1f;
-      color: #eaeaea;
-      outline: none;
-    }
-
-    .search-bar button {
-      background: #ffc400;
-      color: #111;
-      padding: 8px 16px;
-      border-radius: 0 9999px 9999px 0;
-      border: 1px solid #ffc400;
       cursor: pointer;
     }
-    
-    .header-icons a {
-      color: #fff;
-      font-size: 18px;
-      margin-left: 12px;
-      position: relative;
-    }
-
-    .header-icons a:hover {
-      color: #ffc400;
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: #ff5252;
-      color: #fff;
-      font-size: 0.7rem;
-      border-radius: 50%;
-      padding: 2px 6px;
-    }
-
-    .main-nav {
-      background: rgba(17, 17, 17, 0.9);
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
-    }
-    .main-nav a {
-      color: #a1a1a1;
-    }
-    .main-nav a:hover, .main-nav a.active {
-      color: #ffc400;
-    }
-
-    /* Main Container for the page content */
     .container {
       max-width: 1000px;
       margin: 20px auto;
       padding: 20px;
-      background: rgba(17, 17, 17, 0.7);
+      background: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
     }
-
-    /* Order Card styles */
+    h2 {
+      color: #FFD700;
+      margin-bottom: 15px;
+    }
     .order-card {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #1f1f1f;
+      background: rgba(255, 255, 255, 0.1);
       padding: 15px;
-      border-radius: 10px;
+      border-radius: 8px;
       margin-bottom: 15px;
-      flex-wrap: wrap;
     }
-
-    .order-card:last-child {
-      margin-bottom: 0;
+    .order-card img {
+      width: 70px;
+      height: 70px;
+      border-radius: 5px;
+      object-fit: cover;
+      margin-right: 15px;
     }
-
     .order-left {
       display: flex;
       align-items: center;
     }
-
-    .order-left img {
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-right: 15px;
-    }
-
     .order-info h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin: 0 0 5px 0;
-    }
-
-    .order-info p {
       margin: 0;
-      color: #a1a1a1;
-      font-size: 0.9rem;
+      font-size: 1.2em;
     }
-
+    .order-info p {
+      margin: 5px 0 0;
+      font-size: 0.9em;
+      color: #bbb;
+    }
     .status {
       font-weight: bold;
     }
-
     .status.delivered {
-      color: #22c55e; /* Green */
+      color: #28a745;
     }
-
+    .status.shipped {
+      color: #17a2b8;
+    }
     .status.pending {
-      color: #ffc400; /* Yellow */
+      color: #ffc107;
     }
-
     .status.cancelled {
-      color: #ff5252; /* Red */
+      color: #dc3545;
     }
-
-    .order-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    
     .order-actions button {
-      padding: 8px 12px;
-      border-radius: 9999px;
-      font-weight: 600;
-      cursor: pointer;
+      background: #FFD700;
+      color: #000;
       border: none;
-      transition: all 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 8px; /* Added margin for spacing */
+      transition: background-color 0.2s;
     }
-
-    .order-actions button.details-btn {
-      background: #2e2e2e;
-      color: #ffc400;
-      border: 1px solid #3d3d3d;
-    }
-    .order-actions button.details-btn:hover {
-      background: #3d3d3d;
-    }
-    .order-actions a button {
+    .order-actions button:hover {
       background: #ffc400;
-      color: #111;
     }
-    .order-actions a button:hover {
-      background: #ff9f00;
+    nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
     }
+    nav a {
+      color: #FFD700;
+      text-decoration: none;
+      font-size: 24px;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #fff;
+    }
+    .main-header, footer {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .main-header .logo a { color: #ffc400; font-weight: bold; font-size: 1.3em; text-decoration: none; }
+    .header-icons a { margin-left: 12px; color: #ffc400; }
     
-    /* Toast/Message Box */
-    #message-box {
-        position: fixed;
-        bottom: 100px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(30, 30, 30, 0.9);
-        color: #fff;
-        padding: 15px 30px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        text-align: center;
-        transition: opacity 0.5s ease-in-out;
-        opacity: 0;
+    /* Search bar styling */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 5px 10px;
+      flex-grow: 1;
+      margin: 0 10px;
+    }
+    .search-bar input {
+      background: transparent;
+      border: none;
+      color: #fff;
+      outline: none;
+      padding: 8px;
+      width: 100%;
+    }
+    .search-bar input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .search-bar button {
+      background: transparent;
+      border: none;
+      color: #FFD700;
+      font-size: 18px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .search-bar button:hover {
+      color: #fff;
     }
   </style>
-
 </head>
-<body class="bg-gray-900 text-gray-100 font-inter">
-
-  <!-- Main Header -->
-  <header class="main-header sticky top-0 z-50">
+<body>
+  <header class="main-header">
     <div class="logo">
-      <a href="index.html">AllHall</a>
+      <a href="index.html">All Hall</a>
     </div>
-    <div class="search-bar hidden sm:flex flex-grow max-w-lg mx-4">
-      <input type="text" placeholder="Search for products..." class="flex-grow p-2 rounded-l-full bg-gray-800 border border-gray-700 focus:outline-none focus:border-yellow-400">
-      <button class="bg-yellow-400 text-gray-900 p-2 rounded-r-full"><i class="fas fa-search"></i></button>
+    <div class="search-bar">
+      <input type="text" placeholder="Search products...">
+      <button><i class="fas fa-search"></i></button>
     </div>
-    <div class="header-icons flex space-x-4">
-      <a href="cart.html" title="Cart"><i class="fas fa-shopping-cart"></i><span class="badge cart-count">0</span></a>
-      <a href="myorders.html" title="Orders" id="orders-link"><i class="fas fa-box"></i></a>
-      <a href="login.html" title="Login" id="login-link"><i class="fas fa-user"></i></a>
-      <a href="account.html" title="Account" class="hidden" id="account-link"><i class="fas fa-user"></i></a>
+    <div class="header-icons">
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+      <a href="myorders.html"><i class="fas fa-box"></i></a>
+      <a href="login.html"><i class="fas fa-user"></i></a>
     </div>
   </header>
 
-  <main class="container">
-    <h1 class="text-3xl font-bold mb-6 text-center text-yellow-400">My Orders</h1>
-    <div class="orders-list">
-      <p class="text-center text-gray-400">Loading orders...</p>
-      <!-- Orders will be dynamically loaded here by the script -->
-    </div>
-  </main>
-  
-  <!-- A small message box to replace alerts -->
-  <div id="message-box" style="display:none;"></div>
+  <div class="container">
+    <h2>My Orders</h2>
 
-  <!-- Bottom Nav -->
-  <nav class="main-nav flex justify-around items-center p-3 text-sm sm:text-base sticky bottom-0 z-10 w-full rounded-t-3xl shadow-[0_-4px_12px_rgba(0,0,0,0.2)]">
-    <a href="index.html" class="flex flex-col items-center text-gray-400 hover:text-[#ffc400] transition-colors p-2 rounded-lg">
-      <i class="fas fa-home text-xl"></i>
-      <span class="mt-1 text-xs sm:text-sm">Home</span>
-    </a>
-    <a href="cart.html" class="flex flex-col items-center text-gray-400 hover:text-[#ffc400] transition-colors p-2 rounded-lg">
-      <i class="fas fa-shopping-cart text-xl"></i>
-      <span class="mt-1 text-xs sm:text-sm">Cart</span>
-    </a>
-    <a href="myorders.html" class="flex flex-col items-center text-[#ffc400] p-2 rounded-lg">
-      <i class="fas fa-box text-xl"></i>
-      <span class="mt-1 text-xs sm:text-sm">Orders</span>
-    </a>
-    <a href="seller_center.html" id="seller-link" class="flex flex-col items-center text-gray-400 hover:text-[#ffc400] transition-colors p-2 rounded-lg">
-      <i class="fas fa-store text-xl"></i>
-      <span class="mt-1 text-xs sm:text-sm">Seller</span>
-    </a>
-    <a href="account.html" class="flex flex-col items-center text-gray-400 hover:text-[#ffc400] transition-colors p-2 rounded-lg" id="account-link">
-      <i class="fas fa-user text-xl"></i>
-      <span class="mt-1 text-xs sm:text-sm">Account</span>
-    </a>
+    <!-- Order 1 -->
+    <div class="order-card">
+      <div class="order-left">
+        <img src="https://via.placeholder.com/70" alt="Product">
+        <div class="order-info">
+          <h3>Awesome Product</h3>
+          <p>Price: $49.99</p>
+          <p class="status delivered">Delivered</p>
+        </div>
+      </div>
+      <div class="order-actions">
+        <!-- New Track Order button -->
+        <a href="your-tracking-link-here.com/order-id-123" target="_blank">
+          <button>Track Order</button>
+        </a>
+        <button class="details-btn">View Details</button>
+      </div>
+    </div>
+
+    <!-- Order 2 -->
+    <div class="order-card">
+      <div class="order-left">
+        <img src="https://via.placeholder.com/70" alt="Product">
+        <div class="order-info">
+          <h3>Cool Gadget</h3>
+          <p>Price: $29.99</p>
+          <p class="status pending">Pending</p>
+        </div>
+      </div>
+      <div class="order-actions">
+        <!-- New Track Order button -->
+        <a href="your-tracking-link-here.com/order-id-456" target="_blank">
+          <button>Track Order</button>
+        </a>
+        <button class="details-btn">View Details</button>
+      </div>
+    </div>
+
+    <!-- Order 3 -->
+    <div class="order-card">
+      <div class="order-left">
+        <img src="https://via.placeholder.com/70" alt="Product">
+        <div class="order-info">
+          <h3>Stylish Shoes</h3>
+          <p>Price: $59.99</p>
+          <p class="status cancelled">Cancelled</p>
+        </div>
+      </div>
+      <div class="order-actions">
+        <button class="details-btn">View Details</button>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i></a>
+    <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+    <a href="myorders.html"><i class="fas fa-box"></i></a>
+    <a href="login.html"><i class="fas fa-user"></i></a>
   </nav>
 
-  <!-- Import app.js with type="module" -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getFirestore, onSnapshot, collection, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-    import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    
-    // IMPORTANT: These variables are provided by the canvas environment.
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-    const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-    
-    // Initialize Firebase App
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-    let userId = null;
-    let isAuthReady = false;
-
-    const collections = {
-        orders: (uid) => `artifacts/${appId}/users/${uid}/orders`,
-    };
-
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            userId = user.uid;
-            isAuthReady = true;
-            renderOrdersFromFirestore();
-            hideSellerLinkBasedOnRole();
-        } else {
-            if (!isAuthReady) {
-                await signInAnonymously(auth);
-            }
-        }
-    });
-
-    function toast(message, duration = 3000) {
-        const toastEl = document.getElementById('message-box');
-        if (toastEl) {
-            toastEl.textContent = message;
-            toastEl.style.display = 'block';
-            setTimeout(() => {
-                toastEl.style.display = 'none';
-            }, duration);
-        }
-    }
-
-    function renderOrdersFromFirestore() {
-      const ordersContainer = document.querySelector('.orders-list');
-      if (!ordersContainer || !userId) {
-          return;
-      }
-      const q = query(collection(db, collections.orders(userId)));
-      onSnapshot(q, (querySnapshot) => {
-          let orders = [];
-          querySnapshot.forEach((doc) => {
-              orders.push({ id: doc.id, ...doc.data() });
-          });
-          if (orders.length > 0) {
-              ordersContainer.innerHTML = orders.map(order => `
-                  <div class="order-card">
-                    <div class="order-left">
-                      <img src="${order.img}" alt="${order.name}">
-                      <div class="order-info">
-                        <h3>${order.name}</h3>
-                        <p>Price: $${order.price.toFixed(2)}</p>
-                        <p class="status ${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</p>
-                      </div>
-                    </div>
-                    <div class="order-actions">
-                      <a href="your-tracking-link-here.com/order-id-${order.id}" target="_blank">
-                        <button>Track Order</button>
-                      </a>
-                      <button class="details-btn">View Details</button>
-                    </div>
-                  </div>
-              `).join('');
-          } else {
-              ordersContainer.innerHTML = '<p class="text-center text-gray-400">You have no orders yet.</p>';
-          }
-      });
-    }
-
-    // Dummy function for hiding/showing the seller link, since we need it on every page.
-    async function hideSellerLinkBasedOnRole() {
-        const sellerLink = document.getElementById('seller-link');
-        const loginLink = document.getElementById('login-link');
-        const accountLink = document.getElementById('account-link');
-
-        if (sellerLink) {
-          sellerLink.style.display = 'flex';
-        }
-        if (loginLink) {
-            loginLink.style.display = 'none';
-        }
-        if (accountLink) {
-            accountLink.style.display = 'flex';
-        }
-    }
-  </script>
 </body>
 </html>
